@@ -36,3 +36,14 @@ Advanced Extensions
 
             -  App works on bigger screen / computer
             -  App can controlled from phone, that links to computer.
+
+
+Blockers
+---------------
+
+            - Database creation with MongoDB - linking Spring framework with MongoDB - @EnableMongoRepositories(basePackageClasses = UserRepository.class) - Solved
+
+            - Dataloader file structure - solved - all java classes inside application folder
+
+            - 
+
