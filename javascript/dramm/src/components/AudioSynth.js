@@ -4,14 +4,15 @@ import * as Tone from 'tone'
 
 const AudioSynth = () => {
 
-    const synthA = new Tone.Synth().toDestination();
-
-    const loop = new Tone.Loop(time => {
-        synthA.triggerAttackRelease(440, "8n", time);
-    }, "4n").start(0);
-
-
     const startAudio = () => {
+
+        const synthA = new Tone.Synth().toDestination();
+
+        const loop = new Tone.Loop(time => {
+            synthA.triggerAttackRelease(440, "8n", time);
+        }, "16n"). start(0);
+
+        loop.start();
         Tone.Transport.start();
         console.log()
     }
