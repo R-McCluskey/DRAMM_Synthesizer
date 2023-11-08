@@ -1,9 +1,11 @@
-import SynthContainer from '.containers/SynthContainer'
+import SynthContainer from './containers/SynthContainer'
 
 
 const App = () => {
   return (
-    <>SynthContainer</>
+    <>
+    <SynthContainer/>
+    </>
   );
 }
 
