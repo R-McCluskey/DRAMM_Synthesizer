@@ -8,11 +8,10 @@ const AudioSynth = () => {
 
         const synthA = new Tone.Synth().toDestination();
 
-        const loop = new Tone.Loop(time => {
+        new Tone.Loop(time => {
             synthA.triggerAttackRelease(440, "8n", time);
-        }, "16n"). start(0);
+        }, "16n").start(0);
 
-        loop.start();
         Tone.Transport.start();
         console.log()
     }
