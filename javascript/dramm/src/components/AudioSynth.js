@@ -40,6 +40,15 @@ const AudioSynth = () => {
        
     }
 
+    const handlePitch = (evt) => {
+        hertz = evt.target.value
+
+
+    }
+
+
+    
+
     const increaseDistortion= () => {
         dst += 5
         dist.set({distortion:dst})
@@ -47,6 +56,11 @@ const AudioSynth = () => {
 
     const decreaseDistortion= () => {
         dst -= 5
+        dist.set({distortion:dst})
+    }
+
+    const handleDistortion = (evt) => {
+        dst = evt.target.value;
         dist.set({distortion:dst})
     }
 
@@ -60,6 +74,12 @@ const AudioSynth = () => {
     const decreaseReverb = () => {
         dec -= 2
         rev.set({decay:dec})
+    }
+
+    const handleReverb = (evt) => {
+        dec = evt.target.value
+        rev.set({decay:dec})
+
     }
 
     const increaseVolume = () => {
@@ -88,8 +108,25 @@ const AudioSynth = () => {
          <button onClick={increaseDistortion}> A WANT DISTORTION</button>
          <button onClick={decreaseDistortion}> A DONT WANT DISTORTION</button>
 
-
          <input type ="number" onChange={handleChange}/>
+
+         <div>
+            <span>Pitch: </span>
+            <input type="range" min="1" max="1500" class="slider" id="myRange" onChange={handlePitch}/>
+         </div>
+
+         <div>
+            <span>Reverb: </span>
+            <input type="range" min="1" max="100" class="slider" id="myRange" onChange={handleReverb}/>
+         </div>
+
+         <div>
+            <span>Distortion: </span>
+            <input type="range" min="1" max="100" class="slider" id="myRange" onChange={handleDistortion}/>
+         </div>
+
+
+
         </>
 
     )
