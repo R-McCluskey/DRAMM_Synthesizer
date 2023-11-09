@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import AudioSynth from '../components/AudioSynth';
 import VisualSynth from '../components/VisualSynth';
 import Request from '../helpers/request';
+import DrumSynth from '../components/DrumSynth';
 
 const SynthContainer = () => {
 
@@ -25,6 +26,8 @@ const SynthContainer = () => {
         <> 
         <h1>Dramm & Bass </h1>
         <AudioSynth/>
+        <br></br>
+        <DrumSynth/>
         {/* <p>{users}</p> */}
         </>
   );

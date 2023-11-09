@@ -23,21 +23,27 @@ const AudioSynth = () => {
 
     const increaseFrequency = () => {
         hertz +=50
-        startAudio()
+        synth.setNote(hertz)
+        // startAudio()
     }
 
 
     const decreaseFrequency = () => {
         hertz -=50
-        startAudio()
+        synth.setNote(hertz)
+        // startAudio()
        
     }
 
     const increaseVolume = () => {
-        vol.volume.value += 2
+        vol.volume.value += 10
     }
     const decreaseVolume = () => {
-        vol.volume.value -= 2
+        vol.volume.value -= 10
+    }
+
+    const muteVolume = () => {
+      
     }
 
     const handleChange = (event) => {
@@ -54,6 +60,8 @@ const AudioSynth = () => {
          <button onClick={decreaseFrequency}> Decrease pitch</button>
          <button onClick={increaseVolume}> Increase vol</button>
          <button onClick={decreaseVolume}> Decrease vol</button>
+         <button onClick={muteVolume}> mute </button>
+
          <input type ="number" onChange={handleChange}/>
         </>
 
