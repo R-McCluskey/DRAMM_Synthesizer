@@ -4,6 +4,8 @@ import VisualSynth from '../components/VisualSynth';
 import Request from '../helpers/request';
 import DrumSynth from '../components/DrumSynth';
 
+import logo_1 from '../components/images/logo_1.png'
+
 const SynthContainer = () => {
 
   const [users, setUsers] = useState([])
@@ -24,8 +26,11 @@ const SynthContainer = () => {
     return(
 
         <> 
-        <h1>Dramm & Bass </h1>
+        <img src={logo_1}/>
+        <br></br>
         <AudioSynth/>
+        <br></br>
+        <hr></hr>
         <DrumSynth/>
         {/* <p>{users}</p> */}
         </>
