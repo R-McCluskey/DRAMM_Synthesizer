@@ -8,8 +8,15 @@ const AudioSynth = () => {
 
     let vol = new Tone.Volume().toDestination();
     vol.volume.value = 0;
+    let dec = 0.1
+    let rev = new Tone.Reverb(dec).toDestination();
+    let dst = 0
+    let dist = new Tone.Distortion(dst).toDestination();
+    
+
+    
  
-    let synth = new Tone.Synth(hertz).connect(vol).toDestination();
+    let synth = new Tone.Synth(hertz).connect(vol).connect(rev).connect(dist).toDestination();
 
     const startAudio = () => {
 
@@ -33,6 +40,28 @@ const AudioSynth = () => {
        
     }
 
+    const increaseDistortion= () => {
+        dst += 5
+        dist.set({distortion:dst})
+    }
+
+    const decreaseDistortion= () => {
+        dst -= 5
+        dist.set({distortion:dst})
+    }
+
+
+
+    const increaseReverb = () => {
+        dec += 2
+        rev.set({decay:dec})
+    }
+
+    const decreaseReverb = () => {
+        dec -= 2
+        rev.set({decay:dec})
+    }
+
     const increaseVolume = () => {
         vol.volume.value += 2
     }
@@ -48,12 +77,18 @@ const AudioSynth = () => {
     return (
 
         <>
-         <button onClick={startAudio}> Start</button>
-         <button onClick={stopAudio}> Stop</button>
+        <button onMouseDown={startAudio} onMouseUp={stopAudio}> Play </button>
+        {/* <button onClick={stopAudio}> Stop</button> */}
          <button onClick={increaseFrequency}> Increase pitch</button>
          <button onClick={decreaseFrequency}> Decrease pitch</button>
          <button onClick={increaseVolume}> Increase vol</button>
          <button onClick={decreaseVolume}> Decrease vol</button>
+         <button onClick={increaseReverb}> MOAR REVURB </button>
+         <button onClick={decreaseReverb}> LESS REVURB</button>
+         <button onClick={increaseDistortion}> A WANT DISTORTION</button>
+         <button onClick={decreaseDistortion}> A DONT WANT DISTORTION</button>
+
+
          <input type ="number" onChange={handleChange}/>
         </>
 
