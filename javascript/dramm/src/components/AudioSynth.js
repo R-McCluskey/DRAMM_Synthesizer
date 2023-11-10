@@ -1,14 +1,21 @@
-import React from 'react'
+
+import React, {useState, useEffect} from 'react'
 import * as Tone from 'tone'
 
 
-const AudioSynth = () => {
+const AudioSynth = ({sounds}) => {
+
+    const [selectedSound, setSelectedSound] = useState([])
+
+    const soundNodes = sounds.map((sound, index) => {
+      return <option value = {index} key = {index}>{sound.name}</option>
+    })
 
     let hertz = 440;
 
     let vol = new Tone.Volume().toDestination();
     vol.volume.value = 0;
-    let dec = 0.1
+    let dec = 0.001
     let rev = new Tone.Reverb(dec).toDestination();
     let dst = 0
     let dist = new Tone.Distortion(dst).toDestination();
@@ -17,6 +24,13 @@ const AudioSynth = () => {
     
  
     let synth = new Tone.Synth(hertz).connect(vol).connect(rev).connect(dist).toDestination();
+
+    const loadSound = ((event) => {
+        const chosenSound = sounds[event.target.value]
+        setSelectedSound(chosenSound);
+        console.log(chosenSound);
+    
+    })
 
     const startAudio = () => {
 
@@ -124,6 +138,13 @@ const AudioSynth = () => {
             <span>Distortion: </span>
             <input type="range" min="1" max="100" class="slider" id="myRange" onChange={handleDistortion}/>
          </div>
+         
+         <label for="sounds">Select a sound:</label>
+         <select name="sounds" id="sounds" onChange={loadSound}>
+            <option value = "None" defaultValue={true}>No sound selected</option>
+         {soundNodes}
+         </select>
+         
 
 
 

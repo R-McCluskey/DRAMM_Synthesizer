@@ -8,18 +8,18 @@ import logo_1 from '../components/images/logo_1.png'
 
 const SynthContainer = () => {
 
-  const [users, setUsers] = useState([])
-    console.log(users);
+  const [sounds, setSounds] = useState([])
+    console.log(sounds);
 
    useEffect(() => {
      const request = new Request();
      console.log(request);
-     const synthPromise = request.get("api/users")
+     const synthPromise = request.get("api/sounds")
      console.log(synthPromise);
 
      Promise.all([synthPromise])
      .then((data) => {
-        setUsers(data[0])
+        setSounds(data[0])
      })
    }, [])
 
@@ -28,11 +28,10 @@ const SynthContainer = () => {
         <> 
         <img src={logo_1}/>
         <br></br>
-        <AudioSynth/>
+        <AudioSynth sounds = {sounds}/>
         <br></br>
         <hr></hr>
-        <DrumSynth/>
-        {/* <p>{users}</p> */}
+       
         </>
   );
 }
