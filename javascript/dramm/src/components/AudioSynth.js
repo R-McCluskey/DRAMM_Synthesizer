@@ -25,6 +25,17 @@ const AudioSynth = ({sounds}) => {
  
     let synth = new Tone.Synth(hertz).connect(vol).connect(rev).connect(dist).toDestination();
 
+    useEffect (() => {
+        console.log("useeffect triggered");
+      
+        dec = selectedSound.reverb
+        dst = selectedSound.distortion
+
+        console.log(dec);
+
+    }, [selectedSound])
+
+
     const loadSound = ((event) => {
         const chosenSound = sounds[event.target.value]
         setSelectedSound(chosenSound);
@@ -129,14 +140,17 @@ const AudioSynth = ({sounds}) => {
             <input type="range" min="1" max="1500" class="slider" id="myRange" onChange={handlePitch}/>
          </div>
 
+
          <div>
-            <span>Reverb: </span>
+            <span>Reverb: 
             <input type="range" min="1" max="100" class="slider" id="myRange" onChange={handleReverb}/>
+            <p>{selectedSound.reverb} {dec}</p></span>
          </div>
 
          <div>
-            <span>Distortion: </span>
+            <span>Distortion: 
             <input type="range" min="1" max="100" class="slider" id="myRange" onChange={handleDistortion}/>
+            <p>{selectedSound.distortion} {dst}</p> </span>
          </div>
          
          <label for="sounds">Select a sound:</label>
