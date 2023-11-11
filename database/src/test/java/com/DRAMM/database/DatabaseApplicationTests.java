@@ -4,7 +4,7 @@ import com.DRAMM.database.models.User;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import com.DRAMM.database.repository.UserRepository;
+import com.DRAMM.database.repository.SoundRepository;
 
 import static org.junit.Assert.assertEquals;
 
@@ -12,7 +12,7 @@ import static org.junit.Assert.assertEquals;
 class DatabaseApplicationTests {
 
 	@Autowired
-	UserRepository userRepository;
+    SoundRepository soundRepository;
 
 	@Test
 	void contextLoads() {
@@ -21,7 +21,7 @@ class DatabaseApplicationTests {
 	@Test
 	public void createUserThenSave(){
 		User matthew = new User("MatthewTest");
-		userRepository.save(matthew);
+		soundRepository.save(matthew);
 	}
 
 
