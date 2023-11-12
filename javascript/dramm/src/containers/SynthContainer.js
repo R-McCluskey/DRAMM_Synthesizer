@@ -76,8 +76,8 @@ const SynthContainer = () => {
                 <br></br>
                 <NavMenu onChange={handleChange}>
                   {/* <option value=''>Synth_1</option> */}
-                  <option value={<DrumSynth/>}>Drum Synth</option>
-                  <option value={<Sequencer/>}>Sequencer</option>
+                  {/* <option value={<DrumSynth/>}>Drum Synth</option> */}
+                  {/* <option value={<Sequencer/>}>Sequencer</option> */}
                   <option value={<AudioSynth sounds = {sounds}/>}>Theremin</option>
                 </NavMenu>
                 <br></br>
