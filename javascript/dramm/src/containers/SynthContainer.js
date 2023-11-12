@@ -84,8 +84,8 @@ const SynthContainer = () => {
                 {/* <EmptyBox/> */}
 
                 {handleChange}
-                {/* <AudioSynth sounds = {sounds}/> */}
-                <Sequencer/>
+                <AudioSynth sounds = {sounds}/>
+                {/* <Sequencer/> */}
 
               <EmptyBox></EmptyBox>
             </MainContainer>
