@@ -2,6 +2,8 @@ import { setSelectionRange } from '@testing-library/user-event/dist/utils'
 import Reac, {useState, useEffect} from 'react'
 import * as Tone from 'tone'
 
+import Theremin from './Theremin'
+
 import styled from 'styled-components'
 
 const ButtonStyle = styled.button`
@@ -83,6 +85,10 @@ align-items: center;
 const SettingFontStyle = styled.p`
 margin-left: 1.5em;
 
+`
+
+const ThereminWindow = styled.div`
+position: relative;
 `
 
 
@@ -268,8 +274,18 @@ const AudioSynth = ({sounds}) => {
 
                 <SettingFontStyle>Distortion: </SettingFontStyle>
                 <SliderStyle type="range" min="1" max="100" className="slider" id="myRange" onChange={handleDistortion}/>
+{/* 
+                <ThereminWindow>
+                    <Theremin/>
+                </ThereminWindow> */}
             </SettingsRowStyle>
+
+         
          </div>
+
+      
+
+ 
 
        
 

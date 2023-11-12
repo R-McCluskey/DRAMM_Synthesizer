@@ -1,3 +1,6 @@
+import * as Tone from 'tone'
+
+// import AudioSynth from './AudioSynth';
 
 import React, { useRef } from 'react';
 import Sketch from 'react-p5';
@@ -9,6 +12,10 @@ width: 100vw;
 height: 100vw;
 `
 
+let synth;
+let vol = 0;
+let hertz = 440;
+let now = Tone.now();
 
 var x = 50;
 var speed = 2;
@@ -19,6 +26,7 @@ function MenuSketch() {
 
     const setup = (p5, canvasParentRef) => {
         p5.createCanvas(p5.windowWidth, p5.windowHeight).parent(canvasParentRef);
+        synth = new Tone.MonoSynth().toDestination();
         
     }
 
@@ -28,6 +36,10 @@ function MenuSketch() {
 
     const draw = (p5) => {
         p5.background(255, 120, 150);
+
+        // synth.triggerAttackRelease("C3", "8n", now + 0.5);
+        synth.volume.value = vol
+
         p5.frameRate(30);
         if(speed > 0) {
             if (x + 50 < p5.width) {
@@ -43,6 +55,8 @@ function MenuSketch() {
             }
         }
         p5.ellipse(x, 160, 180);
+
+        
 
     }
 
