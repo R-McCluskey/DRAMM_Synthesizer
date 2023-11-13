@@ -1,10 +1,7 @@
-import { setSelectionRange } from '@testing-library/user-event/dist/utils'
-import Reac, {useState, useEffect} from 'react'
+import React, {useState, useEffect} from 'react'
 import * as Tone from 'tone'
 
 import P5Sketch from '../components/MenuSketch';
-
-// import Theremin from './Theremin'
 
 import styled from 'styled-components'
 import SoundForm from './SoundForm'
@@ -198,8 +195,7 @@ const AudioSynth = ({sounds, refresh}) => {
              
         </div>
 
-        <P5Sketch/>
-
+         <P5Sketch/>
 
          <div>
             <SettingsRowStyle>
@@ -216,8 +212,6 @@ const AudioSynth = ({sounds, refresh}) => {
                 <SettingFontStyle>Distortion: </SettingFontStyle>
                 <SliderStyle type="range" min="0" max="3" step='0.1' value={selectedSound.distortion} className="slider" id="myRange" onChange={handleDistortion}/>
             </SettingsRowStyle>
-
-         
          </div>
         </>
     )

@@ -15,8 +15,11 @@ height: 60vh;
 // let hertz = 440;
 // let now = Tone.now();
 
-var x = 50;
-var speed = 2;
+// var x = 50;
+// var speed = 2;
+
+var offset = 0;
+var strum = 1;
 
 function MenuSketch() {
 
@@ -27,25 +30,22 @@ function MenuSketch() {
     }
 
     const draw = (p5) => {
-        p5.background(255, 120, 150);
-
-        p5.frameRate(30);
-        if(speed > 0) {
-            if (x + 50 < p5.width) {
-                x += speed
-            } else {
-                speed = -speed;
-            }
-        } else {
-            if (x - 50 > 0) {
-                x += speed;
-            } else {
-                speed = -speed;
-            }
+        p5.background(0, 0, 0);
+        p5.stroke(0, 255, 0);
+        p5.noFill();
+        p5.beginShape();
+        p5.vertex(0, p5.windowHeight);
+        for(var x = 0; x < p5.windowWidth; x++){
+          //var angle = map(x, 0, width, 0, TWO_PI);
+          var angle = offset + x * 0.01;
+          // map x between 0 and width to 0 and Two Pi
+          var y = p5.map(p5.sin(angle), -strum, strum, 150, 250);
+          p5.vertex(x, y);
         }
-        p5.ellipse(x, 160, 180);
-
-    }
+        p5.vertex(p5.windowWidth, p5.windowHeight);
+        p5.endShape();
+        offset += 0.1;
+      }
 
     return (
         <FullScreen ref={parentRef}>
