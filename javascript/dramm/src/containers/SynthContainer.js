@@ -65,6 +65,17 @@ const SynthContainer = () => {
       return evt.target.value
    }
 
+    const refresh = () => {
+    const request = new Request();
+    console.log(request);
+    const synthPromise = request.get("api/sounds")
+    console.log(synthPromise);
+
+    Promise.all([synthPromise])
+    .then((data) => {
+       setSounds(data[0])})
+   }
+
     return(
 
         <div>
@@ -77,10 +88,9 @@ const SynthContainer = () => {
                   {/* <option value=''>Synth_1</option> */}
                   {/* <option value={<DrumSynth/>}>Drum Synth</option> */}
                   {/* <option value={<Sequencer/>}>Sequencer</option> */}
-                  <option value={<AudioSynth sounds = {sounds}/>}>Settings</option>
+                  <option value={<AudioSynth sounds = {sounds} refresh={refresh}/>}>Settings</option>
                 </NavMenu>
                 <br></br>
-                {/* <EmptyBox/> */}
 
                 {handleChange}
                 <AudioSynth sounds = {sounds}/>

@@ -5,6 +5,7 @@ import * as Tone from 'tone'
 import Theremin from './Theremin'
 
 import styled from 'styled-components'
+import SoundForm from './SoundForm'
 
 const ButtonStyle = styled.button`
   background-color: transparent;
@@ -127,7 +128,7 @@ position: relative;
 `
 
 
-const AudioSynth = ({sounds}) => {
+const AudioSynth = ({sounds, refresh}) => {
 
     const [selectedSound, setSelectedSound] = useState({});
     const [selectedVolume, setSelectedVolume] = useState(0.8);
@@ -210,7 +211,8 @@ const AudioSynth = ({sounds}) => {
             <LoadSaveContainer>
                 <ButtonStyle onMouseDown={startAudio} onMouseUp={stopAudio}> Play </ButtonStyle>
                 <div></div>
-                <SaveButtonStyle onClick={saveSound}> Save </SaveButtonStyle>
+                <SaveButtonStyle onClick={saveSound}> <SoundForm sound={selectedSound} refresh={refresh}/> </SaveButtonStyle>
+                
             <br></br>
             </LoadSaveContainer>
                 <StyledDrop placeholder="Load Sound" defaultValue="default" onChange={handleLoad}>
