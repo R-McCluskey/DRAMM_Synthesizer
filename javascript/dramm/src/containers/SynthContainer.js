@@ -69,7 +69,6 @@ const SynthContainer = () => {
 
         <div>
           <P5Container><P5Sketch/></P5Container>
-          
             <MainContainer>
               <EmptyBox/>
                 <StyledLogo src={logo_1} />

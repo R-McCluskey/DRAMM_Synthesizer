@@ -197,13 +197,20 @@ const AudioSynth = ({sounds}) => {
         }
     } // if there's a selected value from dropdown set it to that, if none selected set to default writing in quote marks above
 
+    const saveSound = () => {
+        
+
+        // selectedSound
+
+    }
+
     return (
         <>
         <div>
             <LoadSaveContainer>
                 <ButtonStyle onMouseDown={startAudio} onMouseUp={stopAudio}> Play </ButtonStyle>
                 <div></div>
-                <SaveButtonStyle> Save </SaveButtonStyle>
+                <SaveButtonStyle onClick={saveSound}> Save </SaveButtonStyle>
             <br></br>
             </LoadSaveContainer>
                 <StyledDrop placeholder="Load Sound" defaultValue="default" onChange={handleLoad}>
@@ -230,7 +237,7 @@ const AudioSynth = ({sounds}) => {
 
                 <SettingFontStyle>Distortion: </SettingFontStyle>
                 <SliderStyle type="range" min="0" max="3" step='0.1' value={selectedSound.distortion} className="slider" id="myRange" onChange={handleDistortion}/>
-{/* 
+                {/* 
                 <ThereminWindow>
                     <Theremin/>
                 </ThereminWindow> */}
