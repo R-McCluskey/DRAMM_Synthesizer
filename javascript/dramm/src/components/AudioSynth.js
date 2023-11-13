@@ -95,45 +95,30 @@ position: relative;
 const AudioSynth = ({sounds}) => {
 
     const [selectedSound, setSelectedSound] = useState({});
-
     const [selectedVolume, setSelectedVolume] = useState(0.8);
     const [selectedPitch, setSelectedPitch] = useState(440);
 
-
     useEffect(() => {
-
         rev.set({decay:selectedSound.reverb})
-
         dist.set({distortion:selectedSound.distortion})
-
-        console.log("Use Effect running")
-        console.log(selectedSound)
-
     }, [selectedSound])
 
     const soundNodes = sounds.map((sound, index) => {
         return <option value = {index} key={index}>{sound.name}</option>
     })
 
-
     const comp = new Tone.Compressor(-50, 4); // added compressor to everything so that when values are set high it doesn't distort/clip
 
-
     let vol = new Tone.Volume().toDestination();
-
     let dec = 0.1
     let rev = new Tone.Reverb(dec).toDestination();
-
     let dst = 0
     let dist = new Tone.Distortion(dst).toDestination();
         
- 
     let synth = new Tone.Synth(selectedPitch).connect(vol).connect(rev).connect(dist).connect(comp).toDestination();
 
     const startAudio = () => {
-
-    synth.triggerAttack(selectedPitch)
-
+        synth.triggerAttack(selectedPitch)
     }
 
     const stopAudio = () => {
@@ -155,14 +140,12 @@ const AudioSynth = ({sounds}) => {
         dec = evt.target.value
         rev.set({decay:dec})
         setSelectedSound({...selectedSound, reverb:dec}) // making deep copy, overwrite reverb value, setting sound
-
     }
 
     const handleVolume = (evt) => {
         vol.set({volume:evt.target.value})
         setSelectedVolume(evt.target.value)
     }
-
 
     const handleLoad = (event) => {
         const selectedValue = event.target.value
@@ -179,9 +162,7 @@ const AudioSynth = ({sounds}) => {
         }
     } // if there's a selected value from dropdown set it to that, if none selected set to default writing in quote marks above
 
-
     return (
-
         <>
         <div>
             <ButtonStyle onMouseDown={startAudio} onMouseUp={stopAudio}> Play </ButtonStyle>
@@ -214,15 +195,7 @@ const AudioSynth = ({sounds}) => {
 
          
          </div>
-
-      
-
- 
-
-       
-
         </>
-
     )
 }
 
