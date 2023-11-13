@@ -28,7 +28,7 @@ overflow-y: scroll;
 `
 
 const EmptyBox = styled.div`
-height: 10vh;
+height: 5vh;
 `
 
 const StyledLogo = styled.img`

@@ -9,14 +9,6 @@ const FullScreen = styled.div`
 width: 100vw;
 `
 
-// let synth;
-// let vol = 0;
-// let hertz = 440;
-// let now = Tone.now();
-
-// var x = 50;
-// var speed = 2;
-
 var offset = 0;
 var strum = 1;
 
@@ -29,6 +21,9 @@ function MenuSketch() {
     }
 
     const draw = (p5) => {
+        const xCoord = p5.mouseX;
+        const yCoord = p5.mouseY;
+
         p5.background(0, 0, 0);
         p5.stroke(0, 255, 0);
         p5.noFill();
@@ -38,7 +33,7 @@ function MenuSketch() {
           //var angle = map(x, 0, width, 0, TWO_PI);
           var angle = offset + x * 0.01;
           // map x between 0 and width to 0 and Two Pi
-          var y = p5.map(p5.sin(angle), -strum, strum, 50, 400);
+          var y = p5.map(p5.sin(angle), -strum, strum, xCoord/2, yCoord/2);
           p5.vertex(x, y);
         }
         p5.vertex(p5.windowWidth, p5.windowHeight);

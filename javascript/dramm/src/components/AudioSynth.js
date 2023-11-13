@@ -123,15 +123,28 @@ const AudioSynth = ({sounds, refresh}) => {
         return <option value = {index} key={index}>{sound.name}</option>
     })
 
-    const comp = new Tone.Compressor(-50, 4); // added compressor to everything so that when values are set high it doesn't distort/clip
+    const comp = new Tone.Compressor(-50, 2); // added compressor to everything so that when values are set high it doesn't distort/clip
 
     let vol = new Tone.Volume().toDestination();
     let dec = 0.1
     let rev = new Tone.Reverb(dec).toDestination();
     let dst = 0
     let dist = new Tone.Distortion(dst).toDestination();
+
+
+    let osc = new Tone.AMOscillator(30, "sine", "square").toDestination()
         
-    let synth = new Tone.Synth(selectedPitch).connect(vol).connect(rev).connect(dist).connect(comp).toDestination();
+    let synth = new Tone.Synth({
+        oscillator: {
+            type: 'triangle12'
+        },
+        envelope: {
+            attack: 0.001,
+            decay: 2,
+            sustain: 0.3,
+            release: 5
+        } // how to shape the envelope and change the sinewave - needs state etc
+    }).connect(vol).connect(rev).connect(dist).connect(comp).toDestination();
 
     const startAudio = () => {
         synth.triggerAttack(selectedPitch)
@@ -205,7 +218,7 @@ const AudioSynth = ({sounds, refresh}) => {
                 <SliderStyle type="range" min="20" max="1500" className="slider" id="myRange" onChange={handlePitch}/>
 
                 <SettingFontStyle>Volume: </SettingFontStyle>
-                <SliderStyle type="range" min="0" max="20" className="slider" id="myRange" onChange={handleVolume}/>
+                <SliderStyle type="range" min="0" max="20" value={selectedVolume} className="slider" id="myRange" onChange={handleVolume}/>
             </SettingsRowStyle>
          </div>
         </>
