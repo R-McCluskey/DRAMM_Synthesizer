@@ -19,13 +19,13 @@ public class DataLoader implements ApplicationRunner {
     }
 
     public void run(ApplicationArguments args){
-        Sound sound1 = new Sound("Sound_1", 10, 40);
+        Sound sound1 = new Sound("Sound_1", 1, 1);
         soundRepository.save(sound1);
 
-        Sound sound2 = new Sound("Sound_2", 50, 70);
+        Sound sound2 = new Sound("Sound_2", 0.5, 3);
         soundRepository.save(sound2);
 
-        Sound sound3 = new Sound("Sound_3", 30, 90);
+        Sound sound3 = new Sound("Sound_3", 10, 2);
         soundRepository.save(sound3);
         System.out.println("Data loader running");
     }

@@ -94,23 +94,20 @@ position: relative;
 
 const AudioSynth = ({sounds}) => {
 
-    // if sound not loaded then
+    const [selectedSound, setSelectedSound] = useState({});
 
-    const [selectedSound, setSelectedSound] = useState([]);
-
-    const [selectedReverb, setSelectedReverb] = useState(0.01);
-    const [selectedDistortion, setSelectedDistortion] = useState(0.1);
+    const [selectedVolume, setSelectedVolume] = useState(0.8);
+    const [selectedPitch, setSelectedPitch] = useState(440);
 
 
     useEffect(() => {
 
-        setSelectedReverb(selectedSound.reverb);
-        setSelectedDistortion(selectedSound.distortion);
+        rev.set({decay:selectedSound.reverb})
+
+        dist.set({distortion:selectedSound.distortion})
 
         console.log("Use Effect running")
         console.log(selectedSound)
-        console.log(selectedReverb)
-        console.log(selectedDistortion)
 
     }, [selectedSound])
 
@@ -118,27 +115,24 @@ const AudioSynth = ({sounds}) => {
         return <option value = {index} key={index}>{sound.name}</option>
     })
 
-    let hertz = 440;
+
+    const comp = new Tone.Compressor(-50, 4);
 
 
     let vol = new Tone.Volume().toDestination();
-    vol.volume.value = 0;
 
     let dec = 0.1
     let rev = new Tone.Reverb(dec).toDestination();
 
     let dst = 0
     let dist = new Tone.Distortion(dst).toDestination();
-    
-
-    // 'cannot access before initialization' - be careful where you define the settings
-    
+        
  
-    let synth = new Tone.Synth(hertz).connect(vol).connect(rev).connect(dist).toDestination();
+    let synth = new Tone.Synth(selectedPitch).connect(vol).connect(rev).connect(dist).connect(comp).toDestination();
 
     const startAudio = () => {
 
-    synth.triggerAttack(hertz)
+    synth.triggerAttack(selectedPitch)
 
     }
 
@@ -146,73 +140,29 @@ const AudioSynth = ({sounds}) => {
     synth.triggerRelease();
     }
 
-    // const increaseFrequency = () => {
-    //     hertz +=50
-    //     startAudio()
-    // }
-
-
-    // const decreaseFrequency = () => {
-    //     hertz -=50
-    //     startAudio()
-       
-    // }
-
     const handlePitch = (evt) => {
-        hertz = evt.target.value
+        synth.set({frequency:evt.target.value})
+        setSelectedPitch(evt.target.value)
     }
-
-
-    
-
-    // const increaseDistortion= () => {
-    //     dst += 5
-    //     dist.set({distortion:dst})
-    // }
-
-    // const decreaseDistortion= () => {
-    //     dst -= 5
-    //     dist.set({distortion:dst})
-    // }
 
     const handleDistortion = (evt) => {
         dst = evt.target.value;
         dist.set({distortion:dst})
+        setSelectedSound({...selectedSound, distortion:dst})
     }
-
-
-
-    // const increaseReverb = () => {
-    //     dec += 2
-    //     rev.set({decay:dec})
-    // }
-
-    // const decreaseReverb = () => {
-    //     dec -= 2
-    //     rev.set({decay:dec})
-    // }
 
     const handleReverb = (evt) => {
         dec = evt.target.value
         rev.set({decay:dec})
+        setSelectedSound({...selectedSound, reverb:dec})
 
     }
-
-    // const increaseVolume = () => {
-    //     vol.volume.value += 2
-    // }
-    // const decreaseVolume = () => {
-    //     vol.volume.value -= 2
-    // }
 
     const handleVolume = (evt) => {
-        vol.volume.value = evt.target.value
+        vol.set({volume:evt.target.value})
+        setSelectedVolume(evt.target.value)
     }
 
-    // const handleChange = (event) => {
-    //   hertz = event.target.value
-    //   startAudio()
-    // }
 
     const handleLoad = (event) => {
         const selectedValue = event.target.value
@@ -227,13 +177,7 @@ const AudioSynth = ({sounds}) => {
             const chosenSound = sounds[selectedValue];
             setSelectedSound(chosenSound)
         }
-    //    console.log(event.target.value)
-    //    console.log(sounds)
-    //    console.log("Selected sound: " + selectedSound)
     }
-
-    
-
 
 
     return (
@@ -247,33 +191,21 @@ const AudioSynth = ({sounds}) => {
                 {soundNodes}
             </StyledDrop>
         </div>
-        
-
-        {/* <button onClick={stopAudio}> Stop</button> */}
-         {/* <button onClick={increaseFrequency}> Increase pitch</button>
-         <button onClick={decreaseFrequency}> Decrease pitch</button>
-         <button onClick={increaseVolume}> Increase vol</button>
-         <button onClick={decreaseVolume}> Decrease vol</button> */}
-         {/* <button onClick={increaseReverb}> MOAR REVURB </button>
-         <button onClick={decreaseReverb}> LESS REVURB</button>
-         <button onClick={increaseDistortion}> A WANT DISTORTION</button>
-         <button onClick={decreaseDistortion}> A DONT WANT DISTORTION</button> */}
-         {/* <input type ="number" onChange={handleChange}/> */}
 
          <div>
             <SettingsRowStyle>
                 <SettingFontStyle>Pitch: </SettingFontStyle>
                 <SliderStyle type="range" min="20" max="1500" className="slider" id="myRange" onChange={handlePitch}/>
                 <SettingFontStyle>Volume: </SettingFontStyle>
-                <SliderStyle type="range" min="1" max="100" className="slider" id="myRange" onChange={handleVolume}/>
+                <SliderStyle type="range" min="0" max="20" className="slider" id="myRange" onChange={handleVolume}/>
             </SettingsRowStyle>
 
             <SettingsRowStyle>
                 <SettingFontStyle>Reverb: </SettingFontStyle>
-                <SliderStyle type="range" min="1" max="100" className="slider" id="myRange" onChange={handleReverb}/>
+                <SliderStyle type="range" min="0.1" max="30" step='1' value={selectedSound.reverb} className="slider" id="myRange" onChange={handleReverb}/>
 
                 <SettingFontStyle>Distortion: </SettingFontStyle>
-                <SliderStyle type="range" min="1" max="100" className="slider" id="myRange" onChange={handleDistortion}/>
+                <SliderStyle type="range" min="0" max="3" step='0.1' value={selectedSound.distortion} className="slider" id="myRange" onChange={handleDistortion}/>
 {/* 
                 <ThereminWindow>
                     <Theremin/>
