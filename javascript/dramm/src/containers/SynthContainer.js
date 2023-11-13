@@ -14,7 +14,7 @@ const P5Container = styled.div`
 display: flex;
 position: absolute;
 align-items: center;
-background-color: orange;
+background: rgb(255, 127, 80);
 width: 100vw;
 height: 100vh
 `

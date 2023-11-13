@@ -5,6 +5,8 @@ import P5Sketch from '../components/MenuSketch';
 
 import styled from 'styled-components'
 import SoundForm from './SoundForm'
+import useTouchEvents from 'beautiful-react-hooks/useTouchEvents'
+
 
 const ButtonStyle = styled.button`
   background-color: transparent;
@@ -35,40 +37,34 @@ const ButtonStyle = styled.button`
 `
 const SliderStyle = styled.input`
 position: relative;
-/* left: 50%; */
-/* transform: translate(-45%,-45%); */
 width: 150%;
 height: 10%;
-padding-top: 10%;
-padding-bottom: 10%;
-/* padding-left: 15vw; */
 border-radius: 10%;
 display: flex;
 align-items: center;
-/* box-shadow: 0px 15px 40px #7E6D5766; */
-color: black;
+style : {background: orange }
+
 `
 
 const StyledDrop = styled.select`
-  margin-top: 0.5em;
-  margin-bottom: 0.5em;
-  margin-right: 0.5em;
-  background-color: transparent;
+   background-color: transparent;
   border: 2px solid #1A1A1A;
   border-radius: 15px;
   box-sizing: border-box;
   color: #3B3B3B;
   display: inline-block;
-  font-size: 1em;
+  font-size: 16px;
   font-weight: 600;
   line-height: normal;
   min-height: 30%;
-  padding: 1em 1em;
+  padding: 1.5em 0.5em;
   text-align: center;
+  text-decoration: none;
   transition: all 300ms cubic-bezier(.23, 1, 0.32, 1);
   touch-action: manipulation;
-  width: 100%;
+  width: 85%;
   will-change: transform;
+
 
 &:hover {
   color: #fff;
@@ -86,13 +82,18 @@ align-items: center;
 
 const SettingFontStyle = styled.p`
 margin-left: 1.5em;
+margin-right: 0.5em;
+color: #3B3B3B;
+font-weight: 600;
 
 `
 
 const LoadSaveContainer = styled.div`
 display: flex;
 height: 50%;
-width: 100%;
+width: 60vw;
+justify-content: space-between;
+margin-bottom: 2.5%;
 `
 
 const SoundFormStyle = styled.div`
@@ -103,16 +104,15 @@ const SoundFormStyle = styled.div`
     min-height: 30%;
 `
 
-const ThereminWindow = styled.div`
-position: relative;
-`
-
-
 const AudioSynth = ({sounds, refresh}) => {
 
     const [selectedSound, setSelectedSound] = useState({});
     const [selectedVolume, setSelectedVolume] = useState(0.8);
     const [selectedPitch, setSelectedPitch] = useState(440);
+
+    const [touching, setTouching] = useState(false);
+    const [coordinates, setCoordinates] = useState([0,0]);
+    // const {onTouchStart, onTouchMove, onTouchEnd} = useTouchEvents(ref)
 
     useEffect(() => {
         rev.set({decay:selectedSound.reverb})
@@ -183,34 +183,29 @@ const AudioSynth = ({sounds, refresh}) => {
         <div>
             <LoadSaveContainer>
                 <ButtonStyle onMouseDown={startAudio} onMouseUp={stopAudio}> Play </ButtonStyle>
-                <div></div>
                 <SoundForm sound={selectedSound} refresh={refresh}/> 
                 <StyledDrop placeholder="Load Sound" defaultValue="default" onChange={handleLoad}>
                     <option value='default'>Load Sound</option>
                     {soundNodes}
                 </StyledDrop>
-                
-            <br></br>
             </LoadSaveContainer>
-             
         </div>
 
          <P5Sketch/>
 
          <div>
-            <SettingsRowStyle>
-                <SettingFontStyle>Pitch: </SettingFontStyle>
-                <SliderStyle type="range" min="20" max="1500" className="slider" id="myRange" onChange={handlePitch}/>
-                <SettingFontStyle>Volume: </SettingFontStyle>
-                <SliderStyle type="range" min="0" max="20" className="slider" id="myRange" onChange={handleVolume}/>
-            </SettingsRowStyle>
-
-            <SettingsRowStyle>
+         <SettingsRowStyle>
                 <SettingFontStyle>Reverb: </SettingFontStyle>
                 <SliderStyle type="range" min="0.1" max="30" step='1' value={selectedSound.reverb} className="slider" id="myRange" onChange={handleReverb}/>
 
                 <SettingFontStyle>Distortion: </SettingFontStyle>
                 <SliderStyle type="range" min="0" max="3" step='0.1' value={selectedSound.distortion} className="slider" id="myRange" onChange={handleDistortion}/>
+
+                <SettingFontStyle>Pitch: </SettingFontStyle>
+                <SliderStyle type="range" min="20" max="1500" className="slider" id="myRange" onChange={handlePitch}/>
+
+                <SettingFontStyle>Volume: </SettingFontStyle>
+                <SliderStyle type="range" min="0" max="20" className="slider" id="myRange" onChange={handleVolume}/>
             </SettingsRowStyle>
          </div>
         </>

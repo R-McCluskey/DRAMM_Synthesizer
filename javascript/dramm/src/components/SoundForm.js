@@ -22,6 +22,7 @@ const StyledButton = styled.button`
   touch-action: manipulation;
   width: 85%;
   will-change: transform;
+  margin-right: 5%;
 
 &:hover {
   color: #fff;

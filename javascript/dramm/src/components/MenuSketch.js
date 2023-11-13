@@ -7,7 +7,6 @@ import styled from 'styled-components';
 
 const FullScreen = styled.div`
 width: 100vw;
-height: 60vh;
 `
 
 // let synth;
@@ -39,7 +38,7 @@ function MenuSketch() {
           //var angle = map(x, 0, width, 0, TWO_PI);
           var angle = offset + x * 0.01;
           // map x between 0 and width to 0 and Two Pi
-          var y = p5.map(p5.sin(angle), -strum, strum, 150, 250);
+          var y = p5.map(p5.sin(angle), -strum, strum, 50, 400);
           p5.vertex(x, y);
         }
         p5.vertex(p5.windowWidth, p5.windowHeight);
