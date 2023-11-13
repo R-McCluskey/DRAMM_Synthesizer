@@ -8,29 +8,29 @@ public class Sound implements Serializable {
 
     private String name;
 
-    private int reverb;
+    private double reverb;
 
-    private int distortion;
+    private double distortion;
 
-    public Sound(String name, int reverb, int distortion) {
+    public Sound(String name, double reverb, double distortion) {
         this.name = name;
         this.reverb = reverb;
         this.distortion = distortion;
     }
 
-    public int getReverb() {
+    public double getReverb() {
         return reverb;
     }
 
-    public void setReverb(int reverb) {
+    public void setReverb(double reverb) {
         this.reverb = reverb;
     }
 
-    public int getDistortion() {
+    public double getDistortion() {
         return distortion;
     }
 
-    public void setDistortion(int distortion) {
+    public void setDistortion(double distortion) {
         this.distortion = distortion;
     }
 

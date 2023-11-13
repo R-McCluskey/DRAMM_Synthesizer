@@ -2,7 +2,10 @@ import { setSelectionRange } from '@testing-library/user-event/dist/utils'
 import Reac, {useState, useEffect} from 'react'
 import * as Tone from 'tone'
 
+import Theremin from './Theremin'
+
 import styled from 'styled-components'
+import SoundForm from './SoundForm'
 
 const ButtonStyle = styled.button`
   background-color: transparent;
@@ -20,8 +23,9 @@ const ButtonStyle = styled.button`
   text-decoration: none;
   transition: all 300ms cubic-bezier(.23, 1, 0.32, 1);
   touch-action: manipulation;
-  width: 100%;
+  width: 85%;
   will-change: transform;
+  margin-right: 5%;
 
 &:hover {
   color: #fff;
@@ -49,6 +53,7 @@ color: black;
 const StyledDrop = styled.select`
   margin-top: 0.5em;
   margin-bottom: 0.5em;
+  margin-right: 0.5em;
   background-color: transparent;
   border: 2px solid #1A1A1A;
   border-radius: 15px;
@@ -85,128 +90,98 @@ margin-left: 1.5em;
 
 `
 
+const LoadSaveContainer = styled.div`
+display: flex;
+height: 50%;
+width: 100%;
+`
 
-const AudioSynth = ({sounds}) => {
+const SaveButtonStyle = styled.button`
+  background-color: transparent;
+  border: 2px solid #1A1A1A;
+  border-radius: 15px;
+  box-sizing: border-box;
+  color: #3B3B3B;
+  display: inline-block;
+  font-size: 16px;
+  font-weight: 600;
+  line-height: normal;
+  min-height: 30%;
+  padding: 1.5em 0.5em;
+  text-align: center;
+  text-decoration: none;
+  transition: all 300ms cubic-bezier(.23, 1, 0.32, 1);
+  touch-action: manipulation;
+  width: 85%;
+  will-change: transform;
 
-    // if sound not loaded then
+&:hover {
+  color: #fff;
+  background-color: #1A1A1A;
+  box-shadow: rgba(0, 0, 0, 0.25) 0 8px 15px;
+  transform: translateY(-2px);
+}
+`
 
-    const [selectedSound, setSelectedSound] = useState([]);
+const ThereminWindow = styled.div`
+position: relative;
+`
 
-    const [selectedReverb, setSelectedReverb] = useState(0.01);
-    const [selectedDistortion, setSelectedDistortion] = useState(0.1);
 
+const AudioSynth = ({sounds, refresh}) => {
+
+    const [selectedSound, setSelectedSound] = useState({});
+    const [selectedVolume, setSelectedVolume] = useState(0.8);
+    const [selectedPitch, setSelectedPitch] = useState(440);
 
     useEffect(() => {
-
-        setSelectedReverb(selectedSound.reverb);
-        setSelectedDistortion(selectedSound.distortion);
-
-        console.log("Use Effect running")
-        console.log(selectedSound)
-        console.log(selectedReverb)
-        console.log(selectedDistortion)
-
+        rev.set({decay:selectedSound.reverb})
+        dist.set({distortion:selectedSound.distortion})
     }, [selectedSound])
 
     const soundNodes = sounds.map((sound, index) => {
         return <option value = {index} key={index}>{sound.name}</option>
     })
 
-    let hertz = 440;
-
+    const comp = new Tone.Compressor(-50, 4); // added compressor to everything so that when values are set high it doesn't distort/clip
 
     let vol = new Tone.Volume().toDestination();
-    vol.volume.value = 0;
-
     let dec = 0.1
     let rev = new Tone.Reverb(dec).toDestination();
-
     let dst = 0
     let dist = new Tone.Distortion(dst).toDestination();
-    
-
-    // 'cannot access before initialization' - be careful where you define the settings
-    
- 
-    let synth = new Tone.Synth(hertz).connect(vol).connect(rev).connect(dist).toDestination();
+        
+    let synth = new Tone.Synth(selectedPitch).connect(vol).connect(rev).connect(dist).connect(comp).toDestination();
 
     const startAudio = () => {
-
-    synth.triggerAttack(hertz)
-
+        synth.triggerAttack(selectedPitch)
     }
 
     const stopAudio = () => {
     synth.triggerRelease();
     }
 
-    // const increaseFrequency = () => {
-    //     hertz +=50
-    //     startAudio()
-    // }
-
-
-    // const decreaseFrequency = () => {
-    //     hertz -=50
-    //     startAudio()
-       
-    // }
-
     const handlePitch = (evt) => {
-        hertz = evt.target.value
+        synth.set({frequency:evt.target.value})
+        setSelectedPitch(evt.target.value)
     }
-
-
-    
-
-    // const increaseDistortion= () => {
-    //     dst += 5
-    //     dist.set({distortion:dst})
-    // }
-
-    // const decreaseDistortion= () => {
-    //     dst -= 5
-    //     dist.set({distortion:dst})
-    // }
 
     const handleDistortion = (evt) => {
         dst = evt.target.value;
         dist.set({distortion:dst})
+        setSelectedSound({...selectedSound, distortion:dst}) // making deep copy, overwrite distortion value, setting sound
     }
-
-
-
-    // const increaseReverb = () => {
-    //     dec += 2
-    //     rev.set({decay:dec})
-    // }
-
-    // const decreaseReverb = () => {
-    //     dec -= 2
-    //     rev.set({decay:dec})
-    // }
 
     const handleReverb = (evt) => {
         dec = evt.target.value
         rev.set({decay:dec})
-
+        setSelectedSound({...selectedSound, reverb:dec}) // making deep copy, overwrite reverb value, setting sound
     }
-
-    // const increaseVolume = () => {
-    //     vol.volume.value += 2
-    // }
-    // const decreaseVolume = () => {
-    //     vol.volume.value -= 2
-    // }
 
     const handleVolume = (evt) => {
-        vol.volume.value = evt.target.value
+        vol.set({volume:evt.target.value})
+        setSelectedVolume(evt.target.value)
     }
-
-    // const handleChange = (event) => {
-    //   hertz = event.target.value
-    //   startAudio()
-    // }
 
     const handleLoad = (event) => {
         const selectedValue = event.target.value
@@ -221,60 +196,58 @@ const AudioSynth = ({sounds}) => {
             const chosenSound = sounds[selectedValue];
             setSelectedSound(chosenSound)
         }
-    //    console.log(event.target.value)
-    //    console.log(sounds)
-    //    console.log("Selected sound: " + selectedSound)
-    }
+    } // if there's a selected value from dropdown set it to that, if none selected set to default writing in quote marks above
 
-    
-
-
-
-    return (
-
-        <>
-        <div>
-            <ButtonStyle onMouseDown={startAudio} onMouseUp={stopAudio}> Play </ButtonStyle>
-            <br></br>
-            <StyledDrop placeholder="Load Sound" defaultValue="default" onChange={handleLoad}>
-                <option value='default'>Load Sound</option>
-                {soundNodes}
-            </StyledDrop>
-        </div>
+    const saveSound = () => {
         
 
-        {/* <button onClick={stopAudio}> Stop</button> */}
-         {/* <button onClick={increaseFrequency}> Increase pitch</button>
-         <button onClick={decreaseFrequency}> Decrease pitch</button>
-         <button onClick={increaseVolume}> Increase vol</button>
-         <button onClick={decreaseVolume}> Decrease vol</button> */}
-         {/* <button onClick={increaseReverb}> MOAR REVURB </button>
-         <button onClick={decreaseReverb}> LESS REVURB</button>
-         <button onClick={increaseDistortion}> A WANT DISTORTION</button>
-         <button onClick={decreaseDistortion}> A DONT WANT DISTORTION</button> */}
-         {/* <input type ="number" onChange={handleChange}/> */}
+        // selectedSound
+
+    }
+
+    return (
+        <>
+        <div>
+            <LoadSaveContainer>
+                <ButtonStyle onMouseDown={startAudio} onMouseUp={stopAudio}> Play </ButtonStyle>
+                <div></div>
+                <SaveButtonStyle onClick={saveSound}> <SoundForm sound={selectedSound} refresh={refresh}/> </SaveButtonStyle>
+                
+            <br></br>
+            </LoadSaveContainer>
+                <StyledDrop placeholder="Load Sound" defaultValue="default" onChange={handleLoad}>
+                    <option value='default'>Load Sound</option>
+                    {soundNodes}
+                </StyledDrop>
+                
+            
+            
+
+        </div>
 
          <div>
             <SettingsRowStyle>
                 <SettingFontStyle>Pitch: </SettingFontStyle>
                 <SliderStyle type="range" min="20" max="1500" className="slider" id="myRange" onChange={handlePitch}/>
                 <SettingFontStyle>Volume: </SettingFontStyle>
-                <SliderStyle type="range" min="1" max="100" className="slider" id="myRange" onChange={handleVolume}/>
+                <SliderStyle type="range" min="0" max="20" className="slider" id="myRange" onChange={handleVolume}/>
             </SettingsRowStyle>
 
             <SettingsRowStyle>
                 <SettingFontStyle>Reverb: </SettingFontStyle>
-                <SliderStyle type="range" min="1" max="100" className="slider" id="myRange" onChange={handleReverb}/>
+                <SliderStyle type="range" min="0.1" max="30" step='1' value={selectedSound.reverb} className="slider" id="myRange" onChange={handleReverb}/>
 
                 <SettingFontStyle>Distortion: </SettingFontStyle>
-                <SliderStyle type="range" min="1" max="100" className="slider" id="myRange" onChange={handleDistortion}/>
+                <SliderStyle type="range" min="0" max="3" step='0.1' value={selectedSound.distortion} className="slider" id="myRange" onChange={handleDistortion}/>
+                {/* 
+                <ThereminWindow>
+                    <Theremin/>
+                </ThereminWindow> */}
             </SettingsRowStyle>
+
+         
          </div>
-
-       
-
         </>
-
     )
 }
 
