@@ -148,13 +148,13 @@ const AudioSynth = ({sounds}) => {
     const handleDistortion = (evt) => {
         dst = evt.target.value;
         dist.set({distortion:dst})
-        setSelectedSound({...selectedSound, distortion:dst})
+        setSelectedSound({...selectedSound, distortion:dst}) // making deep copy, overwrite distortion value, setting sound
     }
 
     const handleReverb = (evt) => {
         dec = evt.target.value
         rev.set({decay:dec})
-        setSelectedSound({...selectedSound, reverb:dec})
+        setSelectedSound({...selectedSound, reverb:dec}) // making deep copy, overwrite reverb value, setting sound
 
     }
 
@@ -177,7 +177,7 @@ const AudioSynth = ({sounds}) => {
             const chosenSound = sounds[selectedValue];
             setSelectedSound(chosenSound)
         }
-    }
+    } // if there's a selected value from dropdown set it to that, if none selected set to default writing in quote marks above
 
 
     return (
