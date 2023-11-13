@@ -116,7 +116,7 @@ const AudioSynth = ({sounds}) => {
     })
 
 
-    const comp = new Tone.Compressor(-50, 4);
+    const comp = new Tone.Compressor(-50, 4); // added compressor to everything so that when values are set high it doesn't distort/clip
 
 
     let vol = new Tone.Volume().toDestination();
