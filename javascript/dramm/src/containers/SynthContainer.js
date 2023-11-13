@@ -14,6 +14,9 @@ const P5Container = styled.div`
 display: flex;
 position: absolute;
 align-items: center;
+background-color: orange;
+width: 100vw;
+height: 100vh
 `
 const MainContainer = styled.div`
 display: flex;
@@ -25,11 +28,11 @@ overflow-y: scroll;
 `
 
 const EmptyBox = styled.div`
-height: 12.5vh;
+height: 10vh;
 `
 
 const StyledLogo = styled.img`
-width: 45%;
+width: 35%;
 `
 
 const NavMenu = styled.select`
@@ -79,7 +82,9 @@ const SynthContainer = () => {
     return(
 
         <div>
-          <P5Container><P5Sketch/></P5Container>
+          <P5Container></P5Container>
+
+
             <MainContainer>
               <EmptyBox/>
                 <StyledLogo src={logo_1} />
@@ -95,9 +100,10 @@ const SynthContainer = () => {
                 {handleChange}
                 <AudioSynth sounds = {sounds}/>
                 {/* <Sequencer/> */}
-
               <EmptyBox></EmptyBox>
             </MainContainer>
+
+            
         </div>
   );
 }

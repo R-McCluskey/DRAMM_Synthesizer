@@ -2,7 +2,9 @@ import { setSelectionRange } from '@testing-library/user-event/dist/utils'
 import Reac, {useState, useEffect} from 'react'
 import * as Tone from 'tone'
 
-import Theremin from './Theremin'
+import P5Sketch from '../components/MenuSketch';
+
+// import Theremin from './Theremin'
 
 import styled from 'styled-components'
 import SoundForm from './SoundForm'
@@ -186,18 +188,18 @@ const AudioSynth = ({sounds, refresh}) => {
                 <ButtonStyle onMouseDown={startAudio} onMouseUp={stopAudio}> Play </ButtonStyle>
                 <div></div>
                 <SoundForm sound={selectedSound} refresh={refresh}/> 
-                
-            <br></br>
-            </LoadSaveContainer>
                 <StyledDrop placeholder="Load Sound" defaultValue="default" onChange={handleLoad}>
                     <option value='default'>Load Sound</option>
                     {soundNodes}
                 </StyledDrop>
                 
-            
-            
-
+            <br></br>
+            </LoadSaveContainer>
+             
         </div>
+
+        <P5Sketch/>
+
 
          <div>
             <SettingsRowStyle>
@@ -213,10 +215,6 @@ const AudioSynth = ({sounds, refresh}) => {
 
                 <SettingFontStyle>Distortion: </SettingFontStyle>
                 <SliderStyle type="range" min="0" max="3" step='0.1' value={selectedSound.distortion} className="slider" id="myRange" onChange={handleDistortion}/>
-                {/* 
-                <ThereminWindow>
-                    <Theremin/>
-                </ThereminWindow> */}
             </SettingsRowStyle>
 
          
