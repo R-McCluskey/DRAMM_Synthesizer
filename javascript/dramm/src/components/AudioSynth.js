@@ -22,8 +22,9 @@ const ButtonStyle = styled.button`
   text-decoration: none;
   transition: all 300ms cubic-bezier(.23, 1, 0.32, 1);
   touch-action: manipulation;
-  width: 100%;
+  width: 85%;
   will-change: transform;
+  margin-right: 5%;
 
 &:hover {
   color: #fff;
@@ -51,6 +52,7 @@ color: black;
 const StyledDrop = styled.select`
   margin-top: 0.5em;
   margin-bottom: 0.5em;
+  margin-right: 0.5em;
   background-color: transparent;
   border: 2px solid #1A1A1A;
   border-radius: 15px;
@@ -85,6 +87,39 @@ align-items: center;
 const SettingFontStyle = styled.p`
 margin-left: 1.5em;
 
+`
+
+const LoadSaveContainer = styled.div`
+display: flex;
+height: 50%;
+width: 100%;
+`
+
+const SaveButtonStyle = styled.button`
+  background-color: transparent;
+  border: 2px solid #1A1A1A;
+  border-radius: 15px;
+  box-sizing: border-box;
+  color: #3B3B3B;
+  display: inline-block;
+  font-size: 16px;
+  font-weight: 600;
+  line-height: normal;
+  min-height: 30%;
+  padding: 1.5em 0.5em;
+  text-align: center;
+  text-decoration: none;
+  transition: all 300ms cubic-bezier(.23, 1, 0.32, 1);
+  touch-action: manipulation;
+  width: 85%;
+  will-change: transform;
+
+&:hover {
+  color: #fff;
+  background-color: #1A1A1A;
+  box-shadow: rgba(0, 0, 0, 0.25) 0 8px 15px;
+  transform: translateY(-2px);
+}
 `
 
 const ThereminWindow = styled.div`
@@ -165,12 +200,20 @@ const AudioSynth = ({sounds}) => {
     return (
         <>
         <div>
-            <ButtonStyle onMouseDown={startAudio} onMouseUp={stopAudio}> Play </ButtonStyle>
+            <LoadSaveContainer>
+                <ButtonStyle onMouseDown={startAudio} onMouseUp={stopAudio}> Play </ButtonStyle>
+                <div></div>
+                <SaveButtonStyle> Save </SaveButtonStyle>
             <br></br>
-            <StyledDrop placeholder="Load Sound" defaultValue="default" onChange={handleLoad}>
-                <option value='default'>Load Sound</option>
-                {soundNodes}
-            </StyledDrop>
+            </LoadSaveContainer>
+                <StyledDrop placeholder="Load Sound" defaultValue="default" onChange={handleLoad}>
+                    <option value='default'>Load Sound</option>
+                    {soundNodes}
+                </StyledDrop>
+                
+            
+            
+
         </div>
 
          <div>
