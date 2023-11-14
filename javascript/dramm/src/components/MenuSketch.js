@@ -46,8 +46,8 @@ function MenuSketch() {
                 p5.vertex(x, y);
               }
         }
-        console.log(xCoord);
-        console.log(yCoord);
+        // console.log(xCoord);
+        // console.log(yCoord);
 
         
         p5.vertex(p5.windowWidth, p5.windowHeight);
