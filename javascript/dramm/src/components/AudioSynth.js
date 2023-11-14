@@ -1,12 +1,9 @@
 import React, {useState, useEffect} from 'react'
 import * as Tone from 'tone'
-
-import P5Sketch from '../components/MenuSketch';
-
+import MenuSketch from '../components/MenuSketch';
 import styled from 'styled-components'
 import SoundForm from './SoundForm'
 import useTouchEvents from 'beautiful-react-hooks/useTouchEvents'
-
 
 const ButtonStyle = styled.button`
   background-color: transparent;
@@ -43,7 +40,6 @@ border-radius: 10%;
 display: flex;
 align-items: center;
 style : {background: orange }
-
 `
 
 const StyledDrop = styled.select`
@@ -65,7 +61,6 @@ const StyledDrop = styled.select`
   width: 85%;
   will-change: transform;
 
-
 &:hover {
   color: #fff;
   background-color: #1A1A1A;
@@ -85,7 +80,6 @@ margin-left: 1.5em;
 margin-right: 0.5em;
 color: #3B3B3B;
 font-weight: 600;
-
 `
 
 const LoadSaveContainer = styled.div`
@@ -113,15 +107,18 @@ const AudioSynth = ({sounds, refresh}) => {
     }); // set default 
     const [selectedVolume, setSelectedVolume] = useState(0.8);
     const [selectedPitch, setSelectedPitch] = useState(440);
-
-    const [touching, setTouching] = useState(false);
-    const [coordinates, setCoordinates] = useState([0,0]);
+    // const [touching, setTouching] = useState(false);
+    // const [coordinates, setCoordinates] = useState([0,0]);
     // const {onTouchStart, onTouchMove, onTouchEnd} = useTouchEvents(ref)
 
     useEffect(() => {
         rev.set({decay:selectedSound.reverb})
         dist.set({distortion:selectedSound.distortion})
     }, [selectedSound])
+
+    useEffect (() => {
+        const now = Tone.now()
+    }, [])
 
     const soundNodes = sounds.map((sound, index) => {
         return <option value = {index} key={index}>{sound.name}</option>
@@ -134,9 +131,6 @@ const AudioSynth = ({sounds, refresh}) => {
     let rev = new Tone.Reverb(dec).toDestination();
     let dst = 0
     let dist = new Tone.Distortion(dst).toDestination();
-
-
-    let osc = new Tone.AMOscillator(30, "sine", "square").toDestination()
         
     let synth = new Tone.Synth({
         oscillator: {
@@ -151,11 +145,13 @@ const AudioSynth = ({sounds, refresh}) => {
     }).connect(vol).connect(rev).connect(dist).connect(comp).toDestination();
 
     const startAudio = () => {
+        Tone.start();
+        console.log("start audio trigger");
         synth.triggerAttack(selectedPitch)
     }
 
     const stopAudio = () => {
-    synth.triggerRelease();
+        synth.triggerRelease();
     }
 
     const handlePitch = (evt) => {
@@ -199,7 +195,7 @@ const AudioSynth = ({sounds, refresh}) => {
         <>
         <div>
             <LoadSaveContainer>
-                <ButtonStyle onMouseDown={startAudio} onMouseUp={stopAudio}> Play </ButtonStyle>
+                <ButtonStyle onTouchStart={startAudio} onTouchEnd={stopAudio}> Play </ButtonStyle>
                 <SoundForm sound={selectedSound} refresh={refresh}/> 
                 <StyledDrop placeholder="Load Sound" defaultValue="default" onChange={handleLoad}>
                     <option value='default'>Load Sound</option>
@@ -207,9 +203,9 @@ const AudioSynth = ({sounds, refresh}) => {
                 </StyledDrop>
             </LoadSaveContainer>
         </div>
-
-         <P5Sketch/>
-
+        <div onTouchStart={startAudio} onTouchEnd={stopAudio}>
+         <MenuSketch />
+         </div>
          <div>
          <SettingsRowStyle>
                 <SettingFontStyle>Reverb: </SettingFontStyle>
@@ -217,7 +213,7 @@ const AudioSynth = ({sounds, refresh}) => {
 
                 <SettingFontStyle>Distortion: </SettingFontStyle>
                 <SliderStyle type="range" min="0" max="3" step='0.1' value={selectedSound.distortion} className="slider" id="myRange" onChange={handleDistortion}/>
-
+ 
                 <SettingFontStyle>Pitch: </SettingFontStyle>
                 <SliderStyle type="range" min="20" max="1500" value={selectedPitch} className="slider" id="myRange" onChange={handlePitch}/>
 

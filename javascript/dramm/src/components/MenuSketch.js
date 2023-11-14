@@ -1,8 +1,6 @@
 import * as Tone from 'tone'
-
 import React, { useRef } from 'react';
 import Sketch from 'react-p5';
-
 import styled from 'styled-components';
 
 const FullScreen = styled.div`
@@ -45,15 +43,12 @@ function MenuSketch() {
                 var y = p5.map(p5.sin(angle), -strum, strum, 225, 275);
                 p5.vertex(x, y);
               }
-        }
-        // console.log(xCoord);
-        // console.log(yCoord);
+            }
 
-        
         p5.vertex(p5.windowWidth, p5.windowHeight);
         p5.endShape();
         offset += 0.1;
-      }
+    }
 
     return (
         <FullScreen ref={parentRef}>
