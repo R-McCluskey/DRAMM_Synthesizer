@@ -110,7 +110,7 @@ const AudioSynth = ({sounds, refresh}) => {
         'distortion' : 0.1,
         'name' : "default",
         'reverb' : 0.01
-    });
+    }); // set default 
     const [selectedVolume, setSelectedVolume] = useState(0.8);
     const [selectedPitch, setSelectedPitch] = useState(440);
 
