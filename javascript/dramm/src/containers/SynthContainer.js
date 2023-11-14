@@ -51,33 +51,33 @@ const SynthContainer = () => {
 
   const [sequencers, setSequencers] = useState([])
 
-   useEffect(() => {
-     const request = new Request();
-     console.log(request);
-     const synthPromise = request.get("api/sounds")
-     console.log(synthPromise);
+  //  useEffect(() => {
+  //    const request = new Request();
+  //    console.log(request);
+  //    const synthPromise = request.get("api/sounds")
+  //    console.log(synthPromise);
 
-     Promise.all([synthPromise])
-     .then((data) => {
-        setSounds(data[0])
-     })
-   }, [])
+  //    Promise.all([synthPromise])
+  //    .then((data) => {
+  //       setSounds(data[0])
+  //    })
+  //  }, [])
 
-   const handleChange = (evt) => {
-      console.log(evt)
-      return evt.target.value
-   }
+  //  const handleChange = (evt) => {
+  //     console.log(evt)
+  //     return evt.target.value
+  //  }
 
-    const refresh = () => {
-    const request = new Request();
-    console.log(request);
-    const synthPromise = request.get("api/sounds")
-    console.log(synthPromise);
+  //   const refresh = () => {
+  //   const request = new Request();
+  //   console.log(request);
+  //   const synthPromise = request.get("api/sounds")
+  //   console.log(synthPromise);
 
-    Promise.all([synthPromise])
-    .then((data) => {
-       setSounds(data[0])})
-   }
+  //   Promise.all([synthPromise])
+  //   .then((data) => {
+  //      setSounds(data[0])})
+  //  }
 
     return(
 
@@ -89,15 +89,14 @@ const SynthContainer = () => {
               <EmptyBox/>
                 <StyledLogo src={logo_1} />
                 <br></br>
-                <NavMenu onChange={handleChange}>
+                <NavMenu>
                   {/* <option value=''>Synth_1</option> */}
                   {/* <option value={<DrumSynth/>}>Drum Synth</option> */}
                   {/* <option value={<Sequencer/>}>Sequencer</option> */}
-                  <option value={<AudioSynth sounds = {sounds} refresh={refresh}/>}>Settings</option>
+                  <option value={<AudioSynth sounds = {sounds} />}>Settings</option>
                 </NavMenu>
                 <br></br>
 
-                {handleChange}
                 <AudioSynth sounds = {sounds}/>
                 {/* <Sequencer/> */}
               <EmptyBox></EmptyBox>
