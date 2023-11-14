@@ -106,7 +106,11 @@ const SoundFormStyle = styled.div`
 
 const AudioSynth = ({sounds, refresh}) => {
 
-    const [selectedSound, setSelectedSound] = useState({});
+    const [selectedSound, setSelectedSound] = useState({
+        'distortion' : 0.1,
+        'name' : "default",
+        'reverb' : 0.01
+    });
     const [selectedVolume, setSelectedVolume] = useState(0.8);
     const [selectedPitch, setSelectedPitch] = useState(440);
 
@@ -142,7 +146,7 @@ const AudioSynth = ({sounds, refresh}) => {
             attack: 0.001,
             decay: 2,
             sustain: 0.3,
-            release: 5
+            release: 2
         } // how to shape the envelope and change the sinewave - needs state etc
     }).connect(vol).connect(rev).connect(dist).connect(comp).toDestination();
 
@@ -161,13 +165,13 @@ const AudioSynth = ({sounds, refresh}) => {
 
     const handleDistortion = (evt) => {
         dst = evt.target.value;
-        dist.set({distortion:dst})
+        // dist.set({distortion:dst})
         setSelectedSound({...selectedSound, distortion:dst}) // making deep copy, overwrite distortion value, setting sound
     }
 
     const handleReverb = (evt) => {
         dec = evt.target.value
-        rev.set({decay:dec})
+        // rev.set({decay:dec})
         setSelectedSound({...selectedSound, reverb:dec}) // making deep copy, overwrite reverb value, setting sound
     }
 
@@ -215,7 +219,7 @@ const AudioSynth = ({sounds, refresh}) => {
                 <SliderStyle type="range" min="0" max="3" step='0.1' value={selectedSound.distortion} className="slider" id="myRange" onChange={handleDistortion}/>
 
                 <SettingFontStyle>Pitch: </SettingFontStyle>
-                <SliderStyle type="range" min="20" max="1500" className="slider" id="myRange" onChange={handlePitch}/>
+                <SliderStyle type="range" min="20" max="1500" value={selectedPitch} className="slider" id="myRange" onChange={handlePitch}/>
 
                 <SettingFontStyle>Volume: </SettingFontStyle>
                 <SliderStyle type="range" min="0" max="20" value={selectedVolume} className="slider" id="myRange" onChange={handleVolume}/>
