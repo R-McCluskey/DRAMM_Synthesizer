@@ -51,7 +51,7 @@ const SoundForm = ({sound, refresh}) => {
     }
 
     return (
-        <Popup trigger={<StyledButton ClassName="savebutton"> Save Sound</StyledButton>} position="right" >
+        <Popup trigger={<StyledButton className="savebutton"> Save Sound</StyledButton>} position="right" >
             <div>
                 <h2> Name Your Sound</h2>
             </div>
