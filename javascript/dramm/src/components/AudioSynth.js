@@ -150,7 +150,8 @@ const AudioSynth = ({sounds, refresh}) => {
     }
 
     const startAudio = (e) => {
-        synth.triggerAttack(e)
+        console.log(e.clientX*3)
+        synth.triggerAttack(e.clientX*3)
     }
 
     const stopAudio = () => {
@@ -158,16 +159,19 @@ const AudioSynth = ({sounds, refresh}) => {
     }
 
     const handleTouch = (e) => {
+        e.preventDefault();
         handlePitch(e.touches[0].clientX*3)
         handleVolume(e.touches[0].clientY/10)
     }
 
     const handleTouchStart = (e) => {
-        startAudio(e.touches[0].clientX*3)
+        e.preventDefault();
+        startAudio(e.touches[0])
         console.log('handleTouchStart');
     }   
 
     const handleTouchEnd = (e) => {
+        e.preventDefault();
         stopAudio(e)
         console.log('handleTouchStart');
     }

@@ -11,11 +11,7 @@ class Request {
             body: JSON.stringify(payload)
         })
         .then(console.log("post complete"))
-
-
     }
-
-    
 }
 
 export default Request;
