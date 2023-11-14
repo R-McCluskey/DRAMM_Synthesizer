@@ -105,8 +105,8 @@ const AudioSynth = ({sounds, refresh}) => {
         'name' : "default",
         'reverb' : 0.01
     }); // set default 
-    const [selectedVolume, setSelectedVolume] = useState(0.8);
-    const [selectedPitch, setSelectedPitch] = useState(440);
+    // const [selectedVolume, setSelectedVolume] = useState(0.8);
+    // const [selectedPitch, setSelectedPitch] = useState(440);
     // const [touching, setTouching] = useState(false);
     // const [coordinates, setCoordinates] = useState([0,0]);
     // const {onTouchStart, onTouchMove, onTouchEnd} = useTouchEvents(ref)
@@ -131,6 +131,7 @@ const AudioSynth = ({sounds, refresh}) => {
     let rev = new Tone.Reverb(dec).toDestination();
     let dst = 0
     let dist = new Tone.Distortion(dst).toDestination();
+    
         
     let synth = new Tone.Synth({
         oscillator: {
@@ -144,19 +145,36 @@ const AudioSynth = ({sounds, refresh}) => {
         } // how to shape the envelope and change the sinewave - needs state etc
     }).connect(vol).connect(rev).connect(dist).connect(comp).toDestination();
 
-    const startAudio = () => {
+    const startTones = () => {
         Tone.start();
-        console.log("start audio trigger");
-        synth.triggerAttack(selectedPitch)
+    }
+
+    const startAudio = (e) => {
+        synth.triggerAttack(e)
     }
 
     const stopAudio = () => {
         synth.triggerRelease();
     }
 
+    const handleTouch = (e) => {
+        handlePitch(e.touches[0].clientX*3)
+        handleVolume(e.touches[0].clientY/10)
+    }
+
+    const handleTouchStart = (e) => {
+        startAudio(e.touches[0].clientX*3)
+        console.log('handleTouchStart');
+    }   
+
+    const handleTouchEnd = (e) => {
+        stopAudio(e)
+        console.log('handleTouchStart');
+    }
+
     const handlePitch = (evt) => {
-        synth.set({frequency:evt.target.value})
-        setSelectedPitch(evt.target.value)
+        synth.set({frequency:evt})
+        // setSelectedPitch(evt.target.value)
     }
 
     const handleDistortion = (evt) => {
@@ -172,8 +190,8 @@ const AudioSynth = ({sounds, refresh}) => {
     }
 
     const handleVolume = (evt) => {
-        vol.set({volume:evt.target.value})
-        setSelectedVolume(evt.target.value)
+        vol.set({volume:evt})
+        // setSelectedVolume(evt.target.value)
     }
 
     const handleLoad = (event) => {
@@ -195,7 +213,7 @@ const AudioSynth = ({sounds, refresh}) => {
         <>
         <div>
             <LoadSaveContainer>
-                {/* <ButtonStyle onTouchStart={startAudio} onTouchEnd={stopAudio}> Play </ButtonStyle> */}
+                <ButtonStyle onClick={startTones}> Start </ButtonStyle>
                 <SoundForm sound={selectedSound} refresh={refresh}/> 
                 <StyledDrop placeholder="Load Sound" defaultValue="default" onChange={handleLoad}>
                     <option value='default'>Load Sound</option>
@@ -203,7 +221,7 @@ const AudioSynth = ({sounds, refresh}) => {
                 </StyledDrop>
             </LoadSaveContainer>
         </div>
-        <div onTouchStart={startAudio} onTouchEnd={stopAudio} onMouseDown={startAudio} onMouseUp={stopAudio}>
+        <div onTouchStart={handleTouchStart} onTouchEnd={handleTouchEnd} onTouchMove={handleTouch} onMouseDown={startAudio} onMouseUp={stopAudio}>
          <MenuSketch />
          </div>
          <div>
@@ -214,11 +232,11 @@ const AudioSynth = ({sounds, refresh}) => {
                 <SettingFontStyle>Distortion: </SettingFontStyle>
                 <SliderStyle type="range" min="0" max="3" step='0.1' value={selectedSound.distortion} className="slider" id="myRange" onChange={handleDistortion}/>
  
-                <SettingFontStyle>Pitch: </SettingFontStyle>
+                {/* <SettingFontStyle>Pitch: </SettingFontStyle>
                 <SliderStyle type="range" min="20" max="1500" value={selectedPitch} className="slider" id="myRange" onChange={handlePitch}/>
 
                 <SettingFontStyle>Volume: </SettingFontStyle>
-                <SliderStyle type="range" min="0" max="20" value={selectedVolume} className="slider" id="myRange" onChange={handleVolume}/>
+                <SliderStyle type="range" min="0" max="200" value={selectedVolume} className="slider" id="myRange" onChange={handleVolume}/> */}
             </SettingsRowStyle>
          </div>
         </>
