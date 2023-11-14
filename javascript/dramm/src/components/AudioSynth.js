@@ -195,7 +195,7 @@ const AudioSynth = ({sounds, refresh}) => {
         <>
         <div>
             <LoadSaveContainer>
-                <ButtonStyle onTouchStart={startAudio} onTouchEnd={stopAudio}> Play </ButtonStyle>
+                {/* <ButtonStyle onTouchStart={startAudio} onTouchEnd={stopAudio}> Play </ButtonStyle> */}
                 <SoundForm sound={selectedSound} refresh={refresh}/> 
                 <StyledDrop placeholder="Load Sound" defaultValue="default" onChange={handleLoad}>
                     <option value='default'>Load Sound</option>
@@ -203,7 +203,7 @@ const AudioSynth = ({sounds, refresh}) => {
                 </StyledDrop>
             </LoadSaveContainer>
         </div>
-        <div onTouchStart={startAudio} onTouchEnd={stopAudio}>
+        <div onTouchStart={startAudio} onTouchEnd={stopAudio} onMouseDown={startAudio} onMouseUp={stopAudio}>
          <MenuSketch />
          </div>
          <div>
