@@ -300,22 +300,22 @@ const AudioSynth = ({sounds, refresh}) => {
 
                 {/* <EnvelopeStyle>
                     <SettingFontStyle>Attack: </SettingFontStyle>
-                    <SliderStyle type="range" min="0" max="3" step='0.1' value={selectedSound.distortion} className="slider" id="myRange" onChange={handleDistortion}/>
+                    <SliderStyle type="range" min="0" max="3" step='0.1' value='' className="slider" id="myRange" onChange=''/>
                 </EnvelopeStyle>
 
                 <EnvelopeStyle>
                     <SettingFontStyle>Decay: </SettingFontStyle>
-                    <SliderStyle type="range" min="0" max="3" step='0.1' value={selectedSound.distortion} className="slider" id="myRange" onChange={handleDistortion}/>
+                    <SliderStyle type="range" min="0" max="3" step='0.1' value='' className="slider" id="myRange" onChange=''/>
                 </EnvelopeStyle>
 
                 <EnvelopeStyle>
                     <SettingFontStyle>Sustain: </SettingFontStyle>
-                    <SliderStyle type="range" min="0" max="3" step='0.1' value={selectedSound.distortion} className="slider" id="myRange" onChange={handleDistortion}/>
+                    <SliderStyle type="range" min="0" max="3" step='0.1' value='' className="slider" id="myRange" onChange=''/>
                 </EnvelopeStyle>
 
                 <EnvelopeStyle>
                     <SettingFontStyle>Release: </SettingFontStyle>
-                    <SliderStyle type="range" min="0" max="3" step='0.1' value={selectedSound.distortion} className="slider" id="myRange" onChange={handleDistortion}/>
+                    <SliderStyle type="range" min="0" max="3" step='0.1' value='' className="slider" id="myRange" onChange=''/>
                 </EnvelopeStyle> */}
             
             </SettingsRowStyle>
