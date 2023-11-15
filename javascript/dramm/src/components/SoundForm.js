@@ -32,7 +32,7 @@ const StyledButton = styled.button`
 }
 `
 
-const SoundForm = ({sound, refresh}) => {
+const SoundForm = ({sound}) => {
 
     const [name, setName] = useState("")
     // Dont pass in  reverb and distortion, since they are already set.
@@ -47,7 +47,6 @@ const SoundForm = ({sound, refresh}) => {
         let newSound = {name, ...sound}
         const request = new Request();
         request.postSound(newSound, 'api/sounds')
-        .then(() => refresh());
     }
 
     return (

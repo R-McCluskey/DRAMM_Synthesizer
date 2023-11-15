@@ -102,7 +102,6 @@ const AudioSynth = ({sounds, refresh}) => {
 
     const [selectedSound, setSelectedSound] = useState({
         'distortion' : 0.1,
-        'name' : "default",
         'reverb' : 0.01
     }); // set default 
     // const [selectedVolume, setSelectedVolume] = useState(0.8);
@@ -238,7 +237,7 @@ const AudioSynth = ({sounds, refresh}) => {
         <div>
             <LoadSaveContainer>
                 <ButtonStyle onClick={startTones}> Start </ButtonStyle>
-                <SoundForm sound={selectedSound} refresh={refresh}/> 
+                <SoundForm sound={selectedSound} /> 
                 <StyledDrop placeholder="Load Sound" defaultValue="default" onChange={handleLoad}>
                     <option value='default'>Load Sound</option>
                     {soundNodes}
