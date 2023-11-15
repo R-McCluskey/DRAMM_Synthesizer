@@ -133,6 +133,8 @@ align-items: center;
 
 const AudioSynth = ({sounds, refresh}) => {
 
+    const [selectedVisual, setSelectedVisual] = useState('Wave')
+
     const [selectedSound, setSelectedSound] = useState({
         'distortion' : 0.1,
         'reverb' : 0.01
@@ -152,13 +154,15 @@ const AudioSynth = ({sounds, refresh}) => {
         dist.set({distortion:selectedSound.distortion})
     }, [selectedSound])
 
-    // useEffect (() => {
-    //     const now = Tone.now()
-    // }, [])
+    useEffect (() => {
+        // const now = Tone.now()
+    }, [selectedVisual])
+
+    const handleChange = (e) => {
+        setSelectedVisual(e.target.value) 
+    }
 
     const container = useRef()
-
-    
 
     const soundNodes = sounds.map((sound, index) => {
         return <option value = {index} key={index}>{sound.name}</option>
@@ -269,10 +273,10 @@ const AudioSynth = ({sounds, refresh}) => {
     } // if there's a selected value from dropdown set it to that, if none selected set to default writing in quote marks above
 
     return (
-        <>
-        <NavMenu>
-            <option >Wave</option>
-            <option>More visuals soon!</option>
+        <> 
+        <NavMenu value={selectedVisual} onChange={handleChange}>
+            <option>Wave</option>
+            <option>Swirls</option>
         </NavMenu>
         <br></br>
         <div>
@@ -322,8 +326,8 @@ const AudioSynth = ({sounds, refresh}) => {
          </div>
 
         <div ref = {container} onTouchStart={handleTouchStart} onTouchEnd={handleTouchEnd} onTouchMove={handleTouch} onMouseDown={startAudio} onMouseUp={stopAudio}>
-         {/* <MenuSketch /> */}
-         <SquareSketch/>
+         {selectedVisual == 'Wave'?  <MenuSketch />:'' }
+         {selectedVisual == 'Swirls'? <SquareSketch/>:'' }
          </div>
     
         </>
