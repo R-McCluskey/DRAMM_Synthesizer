@@ -279,8 +279,8 @@ const AudioSynth = ({sounds, refresh}) => {
          </div>
 
         <div ref = {container} onTouchStart={handleTouchStart} onTouchEnd={handleTouchEnd} onTouchMove={handleTouch} onMouseDown={startAudio} onMouseUp={stopAudio}>
-         <MenuSketch />
-         {/* <SquareSketch/> */}
+         {/* <MenuSketch /> */}
+         <SquareSketch/>
          </div>
     
         </>
