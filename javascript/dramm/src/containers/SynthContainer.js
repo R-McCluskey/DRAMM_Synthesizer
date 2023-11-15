@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
 import AudioSynth from '../components/AudioSynth';
-import VisualSynth from '../components/VisualSynth';
 import Request from '../helpers/request';
 import DrumSynth from '../components/DrumSynth';
 
@@ -86,7 +85,8 @@ const SynthContainer = () => {
                 <StyledLogo src={logo_1} />
                 <br></br>
                 <NavMenu>
-                  <option value={<AudioSynth sounds = {sounds} />}>Settings</option>
+                  <option>Wave</option>
+                  <option>More visuals soon!</option>
                 </NavMenu>
                 <br></br>
                 <AudioSynth sounds = {sounds}/>

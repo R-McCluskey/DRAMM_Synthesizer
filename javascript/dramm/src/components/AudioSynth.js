@@ -15,13 +15,13 @@ const ButtonStyle = styled.button`
   font-size: 16px;
   font-weight: 600;
   line-height: normal;
-  min-height: 30%;
-  padding: 1.5em 0.5em;
+  min-height: 2em;
+  padding: 0.5em 0.5em;
   text-align: center;
   text-decoration: none;
   transition: all 300ms cubic-bezier(.23, 1, 0.32, 1);
   touch-action: manipulation;
-  width: 85%;
+  width: 100%;
   will-change: transform;
   margin-right: 5%;
 
@@ -34,7 +34,7 @@ const ButtonStyle = styled.button`
 `
 const SliderStyle = styled.input`
 position: relative;
-width: 150%;
+width: 110%;
 height: 10%;
 border-radius: 10%;
 display: flex;
@@ -73,6 +73,7 @@ const SettingsRowStyle = styled.div`
 display: flex;
 flex-direction: row;
 align-items: center;
+gap: 10%;
 `
 
 const SettingFontStyle = styled.p`
@@ -80,6 +81,18 @@ margin-left: 1.5em;
 margin-right: 0.5em;
 color: #3B3B3B;
 font-weight: 600;
+`
+
+const ReverbStyle = styled.div `
+display: flex;
+flex-direction: column;
+align-items: center;
+`
+
+const DistortionStyle = styled.div `
+display: flex;
+flex-direction: column;
+align-items: center;
 `
 
 const LoadSaveContainer = styled.div`
@@ -139,7 +152,7 @@ const AudioSynth = ({sounds, refresh}) => {
         }
     }); // added compressor to everything so that when values are set high it doesn't distort/clip
 
-    let vol = new Tone.Volume().toDestination();
+    // let vol = new Tone.Volume().toDestination();
     let dec = 0.1
     let rev = new Tone.Reverb(dec).toDestination();
     let dst = 0
@@ -158,7 +171,7 @@ const AudioSynth = ({sounds, refresh}) => {
             sustain: 0.3,
             release: 2
         } // how to shape the envelope and change the sinewave - needs state etc
-    }).connect(comp).connect(rev).connect(dist).connect(eq).connect(vol).toDestination()
+    }).connect(comp).connect(dist).connect(rev).connect(eq).toDestination()
 
     const startTones = () => {
         Tone.start();
@@ -191,9 +204,11 @@ const AudioSynth = ({sounds, refresh}) => {
 
     const handlePitch = (e) => {
         let calculatedPitch = ((e.clientX) * (1013.8/window.innerWidth)) + 32.70
+
+        if (calculatedPitch <= 1046.50){
         synth.set({frequency:calculatedPitch})
         // setSelectedPitch(evt.target.value)
-    }
+    }}
 
     const handleDistortion = (evt) => {
         dst = evt.target.value;
@@ -210,12 +225,13 @@ const AudioSynth = ({sounds, refresh}) => {
     const handleVolume = (e) => {
         const styleHeight = container.current?.clientHeight
         console.log(styleHeight);
-        let calculatedVolume = -((e.clientY-(window.innerHeight/2)) * (106/styleHeight) )
+        let calculatedVolume = -((e.clientY-(window.innerHeight/2)) * (24/styleHeight) )
         console.log(e.clientY);
         console.log(calculatedVolume);
-        vol.set({volume:calculatedVolume})
+        if (calculatedVolume <= 10){
+            synth.set({volume:calculatedVolume})
         // setSelectedVolume(evt.target.value)
-    }
+    }}
 
     const handleLoad = (event) => {
         const selectedValue = event.target.value
@@ -247,12 +263,15 @@ const AudioSynth = ({sounds, refresh}) => {
 
         <div>
          <SettingsRowStyle>
+            <ReverbStyle>
                 <SettingFontStyle>Reverb: </SettingFontStyle>
                 <SliderStyle type="range" min="0.1" max="30" step='1' value={selectedSound.reverb} className="slider" id="myRange" onChange={handleReverb}/>
+            </ReverbStyle>
 
+            <DistortionStyle>
                 <SettingFontStyle>Distortion: </SettingFontStyle>
                 <SliderStyle type="range" min="0" max="3" step='0.1' value={selectedSound.distortion} className="slider" id="myRange" onChange={handleDistortion}/>
- 
+            </DistortionStyle>
                 {/* <SettingFontStyle>Pitch: </SettingFontStyle>
                 <SliderStyle type="range" min="20" max="1500" value={selectedPitch} className="slider" id="myRange" onChange={handlePitch}/>
 
