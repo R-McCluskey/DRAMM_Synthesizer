@@ -76,6 +76,9 @@ flex-direction: row;
 align-items: center;
 gap: 10%;
 margin-bottom: 0.5em;
+overflow-x: scroll;
+padding-left: 1em;
+padding-right: 1em;
 `
 
 const SettingFontStyle = styled.p`
@@ -111,6 +114,21 @@ const SoundFormStyle = styled.div`
     font-size: 16px;
     font-weight: 600;
     min-height: 30%;
+`
+
+const NavMenu = styled.select`
+width: 40%;
+justify-content: center;
+color: white;
+text-align: center;
+background-color: black;
+
+`
+
+const EnvelopeStyle = styled.div`
+display: flex;
+flex-direction: column;
+align-items: center;
 `
 
 const AudioSynth = ({sounds, refresh}) => {
@@ -252,6 +270,11 @@ const AudioSynth = ({sounds, refresh}) => {
 
     return (
         <>
+        <NavMenu>
+            <option >Wave</option>
+            <option>More visuals soon!</option>
+        </NavMenu>
+        <br></br>
         <div>
             <LoadSaveContainer>
                 <ButtonStyle onClick={startTones}> Start </ButtonStyle>
@@ -274,6 +297,26 @@ const AudioSynth = ({sounds, refresh}) => {
                     <SettingFontStyle>Distortion: </SettingFontStyle>
                     <SliderStyle type="range" min="0" max="3" step='0.1' value={selectedSound.distortion} className="slider" id="myRange" onChange={handleDistortion}/>
                 </DistortionStyle>
+
+                {/* <EnvelopeStyle>
+                    <SettingFontStyle>Attack: </SettingFontStyle>
+                    <SliderStyle type="range" min="0" max="3" step='0.1' value={selectedSound.distortion} className="slider" id="myRange" onChange={handleDistortion}/>
+                </EnvelopeStyle>
+
+                <EnvelopeStyle>
+                    <SettingFontStyle>Decay: </SettingFontStyle>
+                    <SliderStyle type="range" min="0" max="3" step='0.1' value={selectedSound.distortion} className="slider" id="myRange" onChange={handleDistortion}/>
+                </EnvelopeStyle>
+
+                <EnvelopeStyle>
+                    <SettingFontStyle>Sustain: </SettingFontStyle>
+                    <SliderStyle type="range" min="0" max="3" step='0.1' value={selectedSound.distortion} className="slider" id="myRange" onChange={handleDistortion}/>
+                </EnvelopeStyle>
+
+                <EnvelopeStyle>
+                    <SettingFontStyle>Release: </SettingFontStyle>
+                    <SliderStyle type="range" min="0" max="3" step='0.1' value={selectedSound.distortion} className="slider" id="myRange" onChange={handleDistortion}/>
+                </EnvelopeStyle> */}
             
             </SettingsRowStyle>
          </div>
