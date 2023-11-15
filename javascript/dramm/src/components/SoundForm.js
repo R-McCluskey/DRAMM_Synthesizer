@@ -31,6 +31,13 @@ const StyledButton = styled.button`
   transform: translateY(-2px);
 }
 `
+const StyledForm = styled.div`
+  background: black;
+  color: whitesmoke;
+  text-align: center;
+  border-radius: 5px;
+  padding: 1em;
+  `
 
 const SoundForm = ({sound}) => {
 
@@ -51,9 +58,8 @@ const SoundForm = ({sound}) => {
 
     return (
         <Popup trigger={<StyledButton className="savebutton"> Save Sound</StyledButton>} position="right" >
-            <div>
+            <StyledForm>
                 <h2> Name Your Sound</h2>
-            </div>
             <form onSubmit={onSubmit} id="sound-form">
             <input onChange={onChange}
             type="text"
@@ -63,6 +69,7 @@ const SoundForm = ({sound}) => {
             />
             <input type="submit" value="save" id="save" />
             </form>
+            </StyledForm>
 
         </Popup>
       );

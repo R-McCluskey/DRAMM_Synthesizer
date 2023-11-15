@@ -1,8 +1,7 @@
-import * as Tone from 'tone'
+
 import React, { useRef } from 'react';
 import Sketch from 'react-p5';
 import styled from 'styled-components';
-import p5 from 'p5';
 
 const FullScreen = styled.div`
 width: 100vw;

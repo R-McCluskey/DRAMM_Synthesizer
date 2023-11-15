@@ -3,7 +3,8 @@ import * as Tone from 'tone'
 import MenuSketch from '../components/MenuSketch';
 import styled from 'styled-components'
 import SoundForm from './SoundForm'
-import useTouchEvents from 'beautiful-react-hooks/useTouchEvents'
+import SquareSketch from '../sketches/Square';
+
 
 const ButtonStyle = styled.button`
   background-color: transparent;
@@ -15,8 +16,8 @@ const ButtonStyle = styled.button`
   font-size: 16px;
   font-weight: 600;
   line-height: normal;
-  min-height: 2em;
-  padding: 0.5em 0.5em;
+  min-height: 1.5em;
+  padding: 0.5em 0em;
   text-align: center;
   text-decoration: none;
   transition: all 300ms cubic-bezier(.23, 1, 0.32, 1);
@@ -53,12 +54,12 @@ const StyledDrop = styled.select`
   font-weight: 600;
   line-height: normal;
   min-height: 30%;
-  padding: 1.5em 0.5em;
+  margin: 0em 0em;
   text-align: center;
   text-decoration: none;
   transition: all 300ms cubic-bezier(.23, 1, 0.32, 1);
   touch-action: manipulation;
-  width: 85%;
+  width: 170%;
   will-change: transform;
 
 &:hover {
@@ -74,10 +75,14 @@ display: flex;
 flex-direction: row;
 align-items: center;
 gap: 10%;
+margin-bottom: 0.5em;
+overflow-x: scroll;
+padding-left: 1em;
+padding-right: 1em;
 `
 
 const SettingFontStyle = styled.p`
-margin-left: 1.5em;
+margin-left: 0.5em;
 margin-right: 0.5em;
 color: #3B3B3B;
 font-weight: 600;
@@ -98,20 +103,37 @@ align-items: center;
 const LoadSaveContainer = styled.div`
 display: flex;
 height: 50%;
-width: 60vw;
+width: 80vw;
 justify-content: space-between;
 margin-bottom: 2.5%;
 `
 
 const SoundFormStyle = styled.div`
-    background-color: transparent;
+    background-color: black;
     text-align: center;
     font-size: 16px;
     font-weight: 600;
     min-height: 30%;
 `
 
+const NavMenu = styled.select`
+width: 40%;
+justify-content: center;
+color: white;
+text-align: center;
+background-color: black;
+
+`
+
+const EnvelopeStyle = styled.div`
+display: flex;
+flex-direction: column;
+align-items: center;
+`
+
 const AudioSynth = ({sounds, refresh}) => {
+
+    const [selectedVisual, setSelectedVisual] = useState('Wave')
 
     const [selectedSound, setSelectedSound] = useState({
         'distortion' : 0.1,
@@ -132,13 +154,15 @@ const AudioSynth = ({sounds, refresh}) => {
         dist.set({distortion:selectedSound.distortion})
     }, [selectedSound])
 
-    // useEffect (() => {
-    //     const now = Tone.now()
-    // }, [])
+    useEffect (() => {
+        // const now = Tone.now()
+    }, [selectedVisual])
+
+    const handleChange = (e) => {
+        setSelectedVisual(e.target.value) 
+    }
 
     const container = useRef()
-
-    
 
     const soundNodes = sounds.map((sound, index) => {
         return <option value = {index} key={index}>{sound.name}</option>
@@ -249,7 +273,12 @@ const AudioSynth = ({sounds, refresh}) => {
     } // if there's a selected value from dropdown set it to that, if none selected set to default writing in quote marks above
 
     return (
-        <>
+        <> 
+        <NavMenu value={selectedVisual} onChange={handleChange}>
+            <option>Wave</option>
+            <option>Swirls</option>
+        </NavMenu>
+        <br></br>
         <div>
             <LoadSaveContainer>
                 <ButtonStyle onClick={startTones}> Start </ButtonStyle>
@@ -263,25 +292,42 @@ const AudioSynth = ({sounds, refresh}) => {
 
         <div>
          <SettingsRowStyle>
-            <ReverbStyle>
-                <SettingFontStyle>Reverb: </SettingFontStyle>
-                <SliderStyle type="range" min="0.1" max="30" step='1' value={selectedSound.reverb} className="slider" id="myRange" onChange={handleReverb}/>
-            </ReverbStyle>
+                <ReverbStyle>
+                    <SettingFontStyle>Reverb: </SettingFontStyle>
+                    <SliderStyle type="range" min="0.1" max="30" step='1' value={selectedSound.reverb} className="slider" id="myRange" onChange={handleReverb}/>
+                </ReverbStyle>
 
-            <DistortionStyle>
-                <SettingFontStyle>Distortion: </SettingFontStyle>
-                <SliderStyle type="range" min="0" max="3" step='0.1' value={selectedSound.distortion} className="slider" id="myRange" onChange={handleDistortion}/>
-            </DistortionStyle>
-                {/* <SettingFontStyle>Pitch: </SettingFontStyle>
-                <SliderStyle type="range" min="20" max="1500" value={selectedPitch} className="slider" id="myRange" onChange={handlePitch}/>
+                <DistortionStyle>
+                    <SettingFontStyle>Distortion: </SettingFontStyle>
+                    <SliderStyle type="range" min="0" max="3" step='0.1' value={selectedSound.distortion} className="slider" id="myRange" onChange={handleDistortion}/>
+                </DistortionStyle>
 
-                <SettingFontStyle>Volume: </SettingFontStyle>
-                <SliderStyle type="range" min="0" max="200" value={selectedVolume} className="slider" id="myRange" onChange={handleVolume}/> */}
+                {/* <EnvelopeStyle>
+                    <SettingFontStyle>Attack: </SettingFontStyle>
+                    <SliderStyle type="range" min="0" max="3" step='0.1' value='' className="slider" id="myRange" onChange=''/>
+                </EnvelopeStyle>
+
+                <EnvelopeStyle>
+                    <SettingFontStyle>Decay: </SettingFontStyle>
+                    <SliderStyle type="range" min="0" max="3" step='0.1' value='' className="slider" id="myRange" onChange=''/>
+                </EnvelopeStyle>
+
+                <EnvelopeStyle>
+                    <SettingFontStyle>Sustain: </SettingFontStyle>
+                    <SliderStyle type="range" min="0" max="3" step='0.1' value='' className="slider" id="myRange" onChange=''/>
+                </EnvelopeStyle>
+
+                <EnvelopeStyle>
+                    <SettingFontStyle>Release: </SettingFontStyle>
+                    <SliderStyle type="range" min="0" max="3" step='0.1' value='' className="slider" id="myRange" onChange=''/>
+                </EnvelopeStyle> */}
+            
             </SettingsRowStyle>
          </div>
 
         <div ref = {container} onTouchStart={handleTouchStart} onTouchEnd={handleTouchEnd} onTouchMove={handleTouch} onMouseDown={startAudio} onMouseUp={stopAudio}>
-         <MenuSketch />
+         {selectedVisual == 'Wave'?  <MenuSketch />:'' }
+         {selectedVisual == 'Swirls'? <SquareSketch/>:'' }
          </div>
     
         </>

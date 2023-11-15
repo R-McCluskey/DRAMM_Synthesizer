@@ -15,7 +15,9 @@ position: absolute;
 align-items: center;
 background: rgb(255, 127, 80);
 width: 100vw;
-height: 100vh
+height: 100vh;
+touch-action: none;
+overflow: hidden;
 `
 const MainContainer = styled.div`
 display: flex;
@@ -23,7 +25,6 @@ flex-direction: column;
 position: relative;
 align-items: center;
 width: 100%;
-overflow-y: scroll;
 `
 
 const EmptyBox = styled.div`
@@ -32,15 +33,6 @@ height: 5vh;
 
 const StyledLogo = styled.img`
 width: 35%;
-`
-
-const NavMenu = styled.select`
-width: 40%;
-justify-content: center;
-color: white;
-text-align: center;
-background-color: black;
-
 `
 
 const SynthContainer = () => {
@@ -83,11 +75,6 @@ const SynthContainer = () => {
             <MainContainer>
               <EmptyBox/>
                 <StyledLogo src={logo_1} />
-                <br></br>
-                <NavMenu>
-                  <option>Wave</option>
-                  <option>More visuals soon!</option>
-                </NavMenu>
                 <br></br>
                 <AudioSynth sounds = {sounds}/>
             </MainContainer>
