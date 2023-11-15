@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react'
+import React, {useState, useEffect, useRef} from 'react'
 import * as Tone from 'tone'
 import MenuSketch from '../components/MenuSketch';
 import styled from 'styled-components'
@@ -111,31 +111,47 @@ const AudioSynth = ({sounds, refresh}) => {
     // const [coordinates, setCoordinates] = useState([0,0]);
     // const {onTouchStart, onTouchMove, onTouchEnd} = useTouchEvents(ref)
 
+ 
+  
+
+
     useEffect(() => {
         rev.set({decay:selectedSound.reverb})
         dist.set({distortion:selectedSound.distortion})
     }, [selectedSound])
 
-    useEffect (() => {
-        const now = Tone.now()
-    }, [])
+    // useEffect (() => {
+    //     const now = Tone.now()
+    // }, [])
+
+    const container = useRef()
+
+    
 
     const soundNodes = sounds.map((sound, index) => {
         return <option value = {index} key={index}>{sound.name}</option>
     })
 
-    const comp = new Tone.Compressor(-50, 2); // added compressor to everything so that when values are set high it doesn't distort/clip
+    const comp = new Tone.MultibandCompressor({
+        lowFrequency: 150,
+        highFrequency: 2000,
+        high: {
+            threshold: -100
+        }
+    }); // added compressor to everything so that when values are set high it doesn't distort/clip
 
     let vol = new Tone.Volume().toDestination();
     let dec = 0.1
     let rev = new Tone.Reverb(dec).toDestination();
     let dst = 0
     let dist = new Tone.Distortion(dst).toDestination();
+
+    let eq = new Tone.EQ3(0, -2, -20);
     
         
     let synth = new Tone.Synth({
         oscillator: {
-            type: 'triangle12'
+            type: 'sine'
         },
         envelope: {
             attack: 0.001,
@@ -143,15 +159,17 @@ const AudioSynth = ({sounds, refresh}) => {
             sustain: 0.3,
             release: 2
         } // how to shape the envelope and change the sinewave - needs state etc
-    }).connect(vol).connect(rev).connect(dist).connect(comp).toDestination();
+    }).connect(comp).connect(rev).connect(dist).connect(eq).connect(vol).toDestination()
 
     const startTones = () => {
         Tone.start();
     }
 
     const startAudio = (e) => {
-        console.log(e.clientX*3)
-        synth.triggerAttack(e.clientX*3)
+       let calculatedPitch = ((e.clientX) * (1013.8/window.innerWidth)) + 32.70
+    //    console.log(e.clientX)
+        console.log(e.clientY);
+        synth.triggerAttack(calculatedPitch)
     }
 
     const stopAudio = () => {
@@ -159,25 +177,22 @@ const AudioSynth = ({sounds, refresh}) => {
     }
 
     const handleTouch = (e) => {
-        e.preventDefault();
-        handlePitch(e.touches[0].clientX*3)
-        handleVolume(e.touches[0].clientY/10)
+        handlePitch(e.touches[0])
+        handleVolume(e.touches[0])
+
     }
 
     const handleTouchStart = (e) => {
-        e.preventDefault();
         startAudio(e.touches[0])
-        console.log('handleTouchStart');
     }   
 
     const handleTouchEnd = (e) => {
-        e.preventDefault();
         stopAudio(e)
-        console.log('handleTouchStart');
     }
 
-    const handlePitch = (evt) => {
-        synth.set({frequency:evt})
+    const handlePitch = (e) => {
+        let calculatedPitch = ((e.clientX) * (1013.8/window.innerWidth)) + 32.70
+        synth.set({frequency:calculatedPitch})
         // setSelectedPitch(evt.target.value)
     }
 
@@ -193,8 +208,13 @@ const AudioSynth = ({sounds, refresh}) => {
         setSelectedSound({...selectedSound, reverb:dec}) // making deep copy, overwrite reverb value, setting sound
     }
 
-    const handleVolume = (evt) => {
-        vol.set({volume:evt})
+    const handleVolume = (e) => {
+        const styleHeight = container.current?.clientHeight
+        console.log(styleHeight);
+        let calculatedVolume = -((e.clientY-(window.innerHeight/2)) * (106/styleHeight) )
+        console.log(e.clientY);
+        console.log(calculatedVolume);
+        vol.set({volume:calculatedVolume})
         // setSelectedVolume(evt.target.value)
     }
 
@@ -225,10 +245,8 @@ const AudioSynth = ({sounds, refresh}) => {
                 </StyledDrop>
             </LoadSaveContainer>
         </div>
-        <div onTouchStart={handleTouchStart} onTouchEnd={handleTouchEnd} onTouchMove={handleTouch} onMouseDown={startAudio} onMouseUp={stopAudio}>
-         <MenuSketch />
-         </div>
-         <div>
+
+        <div>
          <SettingsRowStyle>
                 <SettingFontStyle>Reverb: </SettingFontStyle>
                 <SliderStyle type="range" min="0.1" max="30" step='1' value={selectedSound.reverb} className="slider" id="myRange" onChange={handleReverb}/>
@@ -243,6 +261,11 @@ const AudioSynth = ({sounds, refresh}) => {
                 <SliderStyle type="range" min="0" max="200" value={selectedVolume} className="slider" id="myRange" onChange={handleVolume}/> */}
             </SettingsRowStyle>
          </div>
+
+        <div ref = {container} onTouchStart={handleTouchStart} onTouchEnd={handleTouchEnd} onTouchMove={handleTouch} onMouseDown={startAudio} onMouseUp={stopAudio}>
+         <MenuSketch />
+         </div>
+    
         </>
     )
 }
