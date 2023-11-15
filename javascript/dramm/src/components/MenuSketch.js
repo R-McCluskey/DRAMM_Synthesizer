@@ -2,6 +2,7 @@ import * as Tone from 'tone'
 import React, { useRef } from 'react';
 import Sketch from 'react-p5';
 import styled from 'styled-components';
+import p5 from 'p5';
 
 const FullScreen = styled.div`
 width: 100vw;
@@ -13,6 +14,8 @@ var strum = 1;
 function MenuSketch() {
 
     const parentRef = useRef();
+    
+
 
     const setup = (p5, canvasParentRef) => {
         p5.createCanvas(p5.windowWidth, p5.windowHeight/2).parent(canvasParentRef);        
@@ -30,17 +33,17 @@ function MenuSketch() {
         if(yCoord > 0 && yCoord < p5.windowHeight/2){
             for(var x = 0; x < p5.windowWidth; x++){
                 //var angle = map(x, 0, width, 0, TWO_PI);
-                var angle = offset + x * xCoord/50000;
+                var angle = offset + x * xCoord/10000;
                 // map x between 0 and width to 0 and Two Pi
-                var y = p5.map(p5.sin(angle), strum * 0, strum * 1, 250, yCoord);
+                var y = p5.map(p5.sin(angle), strum * 0, strum * 1, (p5.windowHeight*0.25), yCoord*0.5);
                 p5.vertex(x, y);
               }
         } else {
             for(var x = 0; x < p5.windowWidth; x++){
                 //var angle = map(x, 0, width, 0, TWO_PI);
-                var angle = offset + x * 0.01;
+                var angle = offset + x * 0.1;
                 // map x between 0 and width to 0 and Two Pi
-                var y = p5.map(p5.sin(angle), -strum, strum, 225, 275);
+                var y = p5.map(p5.sin(angle), -strum, strum, p5.windowHeight*0.15, p5.windowHeight*0.35);
                 p5.vertex(x, y);
               }
             }
