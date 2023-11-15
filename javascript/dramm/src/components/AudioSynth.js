@@ -3,7 +3,8 @@ import * as Tone from 'tone'
 import MenuSketch from '../components/MenuSketch';
 import styled from 'styled-components'
 import SoundForm from './SoundForm'
-import useTouchEvents from 'beautiful-react-hooks/useTouchEvents'
+import SquareSketch from '../sketches/Square';
+
 
 const ButtonStyle = styled.button`
   background-color: transparent;
@@ -279,6 +280,7 @@ const AudioSynth = ({sounds, refresh}) => {
 
         <div ref = {container} onTouchStart={handleTouchStart} onTouchEnd={handleTouchEnd} onTouchMove={handleTouch} onMouseDown={startAudio} onMouseUp={stopAudio}>
          <MenuSketch />
+         {/* <SquareSketch/> */}
          </div>
     
         </>
