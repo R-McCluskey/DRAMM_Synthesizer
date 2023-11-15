@@ -15,8 +15,8 @@ const ButtonStyle = styled.button`
   font-size: 16px;
   font-weight: 600;
   line-height: normal;
-  min-height: 2em;
-  padding: 0.5em 0.5em;
+  min-height: 1.5em;
+  padding: 0.5em 0em;
   text-align: center;
   text-decoration: none;
   transition: all 300ms cubic-bezier(.23, 1, 0.32, 1);
@@ -53,12 +53,12 @@ const StyledDrop = styled.select`
   font-weight: 600;
   line-height: normal;
   min-height: 30%;
-  padding: 1.5em 0.5em;
+  margin: 0em 0em;
   text-align: center;
   text-decoration: none;
   transition: all 300ms cubic-bezier(.23, 1, 0.32, 1);
   touch-action: manipulation;
-  width: 85%;
+  width: 170%;
   will-change: transform;
 
 &:hover {
@@ -74,10 +74,11 @@ display: flex;
 flex-direction: row;
 align-items: center;
 gap: 10%;
+margin-bottom: 0.5em;
 `
 
 const SettingFontStyle = styled.p`
-margin-left: 1.5em;
+margin-left: 0.5em;
 margin-right: 0.5em;
 color: #3B3B3B;
 font-weight: 600;
@@ -98,13 +99,13 @@ align-items: center;
 const LoadSaveContainer = styled.div`
 display: flex;
 height: 50%;
-width: 60vw;
+width: 80vw;
 justify-content: space-between;
 margin-bottom: 2.5%;
 `
 
 const SoundFormStyle = styled.div`
-    background-color: transparent;
+    background-color: black;
     text-align: center;
     font-size: 16px;
     font-weight: 600;
@@ -263,20 +264,16 @@ const AudioSynth = ({sounds, refresh}) => {
 
         <div>
          <SettingsRowStyle>
-            <ReverbStyle>
-                <SettingFontStyle>Reverb: </SettingFontStyle>
-                <SliderStyle type="range" min="0.1" max="30" step='1' value={selectedSound.reverb} className="slider" id="myRange" onChange={handleReverb}/>
-            </ReverbStyle>
+                <ReverbStyle>
+                    <SettingFontStyle>Reverb: </SettingFontStyle>
+                    <SliderStyle type="range" min="0.1" max="30" step='1' value={selectedSound.reverb} className="slider" id="myRange" onChange={handleReverb}/>
+                </ReverbStyle>
 
-            <DistortionStyle>
-                <SettingFontStyle>Distortion: </SettingFontStyle>
-                <SliderStyle type="range" min="0" max="3" step='0.1' value={selectedSound.distortion} className="slider" id="myRange" onChange={handleDistortion}/>
-            </DistortionStyle>
-                {/* <SettingFontStyle>Pitch: </SettingFontStyle>
-                <SliderStyle type="range" min="20" max="1500" value={selectedPitch} className="slider" id="myRange" onChange={handlePitch}/>
-
-                <SettingFontStyle>Volume: </SettingFontStyle>
-                <SliderStyle type="range" min="0" max="200" value={selectedVolume} className="slider" id="myRange" onChange={handleVolume}/> */}
+                <DistortionStyle>
+                    <SettingFontStyle>Distortion: </SettingFontStyle>
+                    <SliderStyle type="range" min="0" max="3" step='0.1' value={selectedSound.distortion} className="slider" id="myRange" onChange={handleDistortion}/>
+                </DistortionStyle>
+            
             </SettingsRowStyle>
          </div>
 
