@@ -329,6 +329,7 @@ const AudioSynth = ({sounds, refresh}) => {
         <div ref = {container} onTouchStart={handleTouchStart} onTouchEnd={handleTouchEnd} onTouchMove={handleTouch} onMouseDown={startAudio} onMouseUp={stopAudio}>
          {selectedVisual == 'Wave'?  <MenuSketch />:'' }
          {selectedVisual == 'Swirls'? <SquareSketch/>:'' }
+         <option>More Visuals Comming Soon!</option>
          </div>
         :
          <p>Click start to begin</p>}
