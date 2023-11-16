@@ -145,7 +145,7 @@ const AudioSynth = ({sounds, refresh}) => {
     // const [coordinates, setCoordinates] = useState([0,0]);
     // const {onTouchStart, onTouchMove, onTouchEnd} = useTouchEvents(ref)
 
- 
+    const [showSketch, setShowSketch] = useState(false)
   
 
 
@@ -199,6 +199,7 @@ const AudioSynth = ({sounds, refresh}) => {
 
     const startTones = () => {
         Tone.start();
+        setShowSketch(true);
     }
 
     const startAudio = (e) => {
@@ -324,12 +325,13 @@ const AudioSynth = ({sounds, refresh}) => {
             
             </SettingsRowStyle>
          </div>
-
+        {showSketch? 
         <div ref = {container} onTouchStart={handleTouchStart} onTouchEnd={handleTouchEnd} onTouchMove={handleTouch} onMouseDown={startAudio} onMouseUp={stopAudio}>
          {selectedVisual == 'Wave'?  <MenuSketch />:'' }
          {selectedVisual == 'Swirls'? <SquareSketch/>:'' }
          </div>
-    
+        :
+         <p>Click start to begin</p>}
         </>
     )
 }
