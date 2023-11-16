@@ -278,6 +278,7 @@ const AudioSynth = ({sounds, refresh}) => {
         <NavMenu value={selectedVisual} onChange={handleChange}>
             <option>Wave</option>
             <option>Swirls</option>
+            <option>More Visuals Coming Soon!</option>
         </NavMenu>
         <br></br>
         <div>
@@ -331,7 +332,7 @@ const AudioSynth = ({sounds, refresh}) => {
          {selectedVisual == 'Swirls'? <SquareSketch/>:'' }
          </div>
         :
-         <p>Click start to begin</p>}
+         <SettingFontStyle>Click start to begin</SettingFontStyle>}
         </>
     )
 }
