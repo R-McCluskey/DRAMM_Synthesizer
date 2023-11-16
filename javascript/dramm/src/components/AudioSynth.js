@@ -278,6 +278,7 @@ const AudioSynth = ({sounds, refresh}) => {
         <NavMenu value={selectedVisual} onChange={handleChange}>
             <option>Wave</option>
             <option>Swirls</option>
+            <option>More Visuals Coming Soon!</option>
         </NavMenu>
         <br></br>
         <div>
@@ -329,10 +330,9 @@ const AudioSynth = ({sounds, refresh}) => {
         <div ref = {container} onTouchStart={handleTouchStart} onTouchEnd={handleTouchEnd} onTouchMove={handleTouch} onMouseDown={startAudio} onMouseUp={stopAudio}>
          {selectedVisual == 'Wave'?  <MenuSketch />:'' }
          {selectedVisual == 'Swirls'? <SquareSketch/>:'' }
-         <option>More Visuals Comming Soon!</option>
          </div>
         :
-         <p>Click start to begin</p>}
+         <SettingFontStyle>Click start to begin</SettingFontStyle>}
         </>
     )
 }
