@@ -86,6 +86,35 @@ margin-left: 0.5em;
 margin-right: 0.5em;
 color: #3B3B3B;
 font-weight: 600;
+width: 50%;
+`
+
+const ButtonStyle1 = styled.button`
+  background-color: black;
+  border: 2px solid #1A1A1A;
+  border-radius: 15px;
+  box-sizing: border-box;
+  color: #3B3B3B;
+  display: inline-block;
+  font-size: 16px;
+  font-weight: 600;
+  line-height: normal;
+  min-height: 8em;
+  padding: 0.5em 0em;
+  text-align: center;
+  text-decoration: none;
+  transition: all 300ms cubic-bezier(.23, 1, 0.32, 1);
+  touch-action: manipulation;
+  width: 100%;
+  will-change: transform;
+  margin-right: 5%;
+
+&:hover {
+  color: #fff;
+  background-color: #1A1A1A;
+  box-shadow: rgba(0, 0, 0, 0.25) 0 8px 15px;
+  transform: translateY(-2px);
+}
 `
 
 const ReverbStyle = styled.div `
@@ -283,7 +312,7 @@ const AudioSynth = ({sounds, refresh}) => {
         <br></br>
         <div>
             <LoadSaveContainer>
-                <ButtonStyle onClick={startTones}> Start </ButtonStyle>
+                {/* <ButtonStyle onClick={startTones}> Start </ButtonStyle> */}
                 <SoundForm sound={selectedSound} /> 
                 <StyledDrop placeholder="Load Sound" defaultValue="default" onChange={handleLoad}>
                     <option value='default'>Load Sound</option>
@@ -332,7 +361,7 @@ const AudioSynth = ({sounds, refresh}) => {
          {selectedVisual == 'Swirls'? <SquareSketch/>:'' }
          </div>
         :
-         <SettingFontStyle>Click start to begin</SettingFontStyle>}
+         <SettingFontStyle><ButtonStyle1 onClick={startTones}> Start </ButtonStyle1></SettingFontStyle>}
         </>
     )
 }
