@@ -1,3 +1,5 @@
+import React, {useEffect} from 'react';
+
 import SynthContainer from './containers/SynthContainer'
 
 import styled from 'styled-components';
@@ -10,7 +12,25 @@ overscroll-behavior: none;
 
 const App = () => {
 
-  document.body.classList.add("no-scroll")
+  useEffect(() => {
+    const handleWheel = (event) => {
+        // Prevent the default scroll behavior
+        event.preventDefault(); 
+    };
+
+    const handleTouchMove = (event) => {
+      event.preventDefault();
+    };
+
+    // Add the event listener to the document
+    document.addEventListener('wheel', handleWheel, { passive: false });
+    document.addEventListener('touchmove', handleTouchMove, { passive: false });
+
+    return () => {
+      document.removeEventListener('wheel', handleWheel);
+      document.removeEventListener('touchmove', handleTouchMove);
+    };
+  }, []);
   
   return (
     <AppStyle>

@@ -22,7 +22,7 @@ overflow: hidden;
 const MainContainer = styled.div`
 display: flex;
 flex-direction: column;
-position: relative;
+position: absolute;
 align-items: center;
 width: 100%;
 `
