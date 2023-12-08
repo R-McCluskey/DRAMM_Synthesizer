@@ -19,6 +19,18 @@ React, MongoDb, Spring.io, Java, Javascript, Tone.js, P5.js, HTML, CSS | A full-
 - In terminal cd into javascript/dramm and use command npm install to install dependencies
 - Also within javascipt/dramm use command npm start to run the frontend
 
+# MVP
+A user can:
+- Create a sound
+- Alter pitch,volume,reverb & distortion settings
+- Save and Load user settings from database
+- View visual which responds to user actions (mouse and touch events)
+
+# Extensions
+- Responsive screen size (desktop and mobile)
+- Volume and pitch controlled by mouse and touch events
+- Additional visual options
+- Hosting (Vercel for frontend)
 
 ## Example of User Loading Sound Settings From Database:
 
