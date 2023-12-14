@@ -1,5 +1,13 @@
 import React from 'react';
 import * as Tone from 'tone'
+import styled from 'styled-components'
+
+const DrumButtons = styled.div`
+display: flex;
+flex-direction: row;
+gap: 3vw;
+margin-bottom: 3vh;
+`
 
 const DrumMachine = () => {
 
@@ -40,13 +48,13 @@ const DrumMachine = () => {
       }
 
     return ( 
-        <>
+        <DrumButtons>
         <button onClick = {handleBass}>Bass</button>
         <button onClick = {handleRide}>Ride</button>
         <button onClick = {handleSnare}>Snare</button>
         <button onClick = {handleTom}>Tom</button>
         <button onClick = {handleCowbell}>Cowbell</button>
-        </>
+        </DrumButtons>
      );
 }
  
