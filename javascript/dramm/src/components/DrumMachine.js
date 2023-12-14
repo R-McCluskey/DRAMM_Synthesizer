@@ -23,9 +23,30 @@ const DrumMachine = () => {
       drumKit.player("Bass").start();
     }
 
+    const handleRide = () => {
+        drumKit.player("Ride").start();
+    }
+
+    const handleSnare = () => {
+        drumKit.player("Snare").start();
+    }
+
+    const handleTom = () => {
+        drumKit.player("Tom").start();
+    }
+
+    const handleCowbell = () => {
+        drumKit.player("Cowbell").start();
+      }
+
     return ( 
         <>
-        <button onClick = {handleBass}>Bass</button></>
+        <button onClick = {handleBass}>Bass</button>
+        <button onClick = {handleRide}>Ride</button>
+        <button onClick = {handleSnare}>Snare</button>
+        <button onClick = {handleTom}>Tom</button>
+        <button onClick = {handleCowbell}>Cowbell</button>
+        </>
      );
 }
  
