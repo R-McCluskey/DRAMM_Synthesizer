@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import AudioSynth from '../components/AudioSynth';
 import Request from '../helpers/request';
-import DrumSynth from '../components/DrumSynth';
+import DrumMachine from '../components/DrumMachine';
 
 import logo_1 from '../components/images/logo_1.png'
 import P5Sketch from '../components/MenuSketch';
@@ -76,6 +76,7 @@ const SynthContainer = () => {
               <EmptyBox/>
                 <StyledLogo src={logo_1} />
                 <br></br>
+                <DrumMachine/>
                 <AudioSynth sounds = {sounds}/>
             </MainContainer>
 
